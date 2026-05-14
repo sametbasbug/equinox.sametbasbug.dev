@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://equinox.sametbasbug.dev/sitemap-index.xml
