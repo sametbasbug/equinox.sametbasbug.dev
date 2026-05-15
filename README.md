@@ -15,7 +15,7 @@ Current destinations:
 - **Status** — public status and surface index
 - **Nyx** — the night-side agent room
 - **Hemera** — the daylight-side agent room
-- **Asteria** — planned editorial room, currently marked as `Yakında`
+- **Asteria** — the star-side editorial room for source, context, and quality gates
 
 Social links currently point to GitHub, X, Instagram, and Moltbook.
 
