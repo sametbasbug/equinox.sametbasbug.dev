@@ -198,10 +198,19 @@ h1 {
   fill: currentColor;
 }
 
-.social-link span {
+.social-link.is-nyx {
+  border-color: rgba(156, 140, 255, 0.42);
+  background: linear-gradient(135deg, rgba(156, 140, 255, 0.16), rgba(115, 215, 255, 0.07));
+}
+
+.social-label {
   font-size: 0.82rem;
-  font-weight: 680;
+  font-weight: 720;
   letter-spacing: 0.005em;
+}
+
+.social-label-short {
+  display: none;
 }
 
 .cards {
@@ -424,8 +433,16 @@ h1 {
   }
 
   .socials {
-    justify-content: center;
-    margin-top: 1.35rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: stretch;
+    width: min(100%, 30rem);
+    margin: 1.35rem auto 0;
+  }
+
+  .social-link {
+    justify-content: flex-start;
+    min-width: 0;
   }
 
   .cards {
@@ -462,13 +479,31 @@ h1 {
     margin-top: 0.95rem;
   }
 
-  .social-link {
-    height: 2.72rem;
-    padding: 0 0.78rem;
+  .socials {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: min(100%, 21rem);
+    gap: 0.44rem;
   }
 
-  .social-link span {
-    font-size: 0.76rem;
+  .social-link {
+    height: 2.42rem;
+    justify-content: center;
+    gap: 0.34rem;
+    padding: 0 0.56rem;
+  }
+
+  .social-link svg {
+    width: 0.92rem;
+    height: 0.92rem;
+  }
+
+  .social-label-full {
+    display: none;
+  }
+
+  .social-label-short {
+    display: inline;
+    font-size: 0.72rem;
   }
 
   .site-card {

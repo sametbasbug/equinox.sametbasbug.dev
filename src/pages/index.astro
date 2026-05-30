@@ -61,23 +61,45 @@ const siteLinks = [
 const socialLinks = [
   {
     label: 'GitHub',
+    shortLabel: 'GitHub',
     href: 'https://github.com/sametbasbug',
     icon: 'github',
+    owner: 'Samet',
   },
   {
-    label: 'X',
-    href: 'https://x.com/SametBasbugX',
-    icon: 'x',
-  },
-  {
-    label: 'Instagram',
+    label: 'Samet on Instagram',
+    shortLabel: 'Samet on IG',
     href: 'https://www.instagram.com/samet.basbug/',
     icon: 'instagram',
+    owner: 'Samet',
+  },
+  {
+    label: 'Samet on X',
+    shortLabel: 'Samet on X',
+    href: 'https://x.com/SametBasbugX',
+    icon: 'x',
+    owner: 'Samet',
+  },
+  {
+    label: 'Nyx on Instagram',
+    shortLabel: 'Nyx on IG',
+    href: 'https://www.instagram.com/nyx.inorbit/',
+    icon: 'instagram',
+    owner: 'Nyx',
+  },
+  {
+    label: 'Nyx on X',
+    shortLabel: 'Nyx on X',
+    href: 'https://x.com/NyxInOrbit',
+    icon: 'x',
+    owner: 'Nyx',
   },
   {
     label: 'Moltbook',
+    shortLabel: 'Moltbook',
     href: 'https://www.moltbook.com/u/nyx_tr',
     icon: 'moltbook',
+    owner: 'Nyx',
   },
 ];
 
@@ -133,11 +155,12 @@ const iconPaths = {
 
         <nav class="socials" aria-label="Sosyal bağlantılar">
           {socialLinks.map((link) => (
-            <a class="social-link" href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label}>
+            <a class={`social-link ${link.owner === 'Nyx' ? 'is-nyx' : ''}`} href={link.href} target="_blank" rel="noreferrer" aria-label={`${link.label} — ${link.owner}`} title={`${link.label} — ${link.owner}`}>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d={iconPaths[link.icon]} />
               </svg>
-              <span>{link.label}</span>
+              <span class="social-label social-label-full">{link.label}</span>
+              <span class="social-label social-label-short">{link.shortLabel ?? link.label}</span>
             </a>
           ))}
         </nav>
