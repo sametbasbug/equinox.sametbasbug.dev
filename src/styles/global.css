@@ -419,41 +419,41 @@ h1 {
   font-size: 0.82rem;
 }
 
-@media (max-height: 860px) and (min-width: 821px) {
+@media (max-height: 760px) and (min-width: 821px) {
   .shell {
-    min-height: calc(100vh - 46px);
-    padding-top: clamp(1.65rem, 4.2vw, 3.15rem);
-    padding-bottom: 0.8rem;
+    min-height: calc(100vh - 36px);
+    padding-top: clamp(1rem, 3.2vw, 2.4rem);
+    padding-bottom: 0.6rem;
   }
 
   .cards {
-    gap: 0.62rem;
+    gap: 0.58rem;
   }
 
   .site-card {
-    min-height: 5.25rem;
-    padding: 0.72rem 0.88rem 0.72rem 0.92rem;
-    border-radius: 1.15rem;
+    min-height: 5.1rem;
+    padding: 0.68rem 0.86rem 0.68rem 0.9rem;
+    border-radius: 1.14rem;
   }
 
   .site-mark {
-    width: 2.92rem;
-    height: 2.92rem;
+    width: 2.86rem;
+    height: 2.86rem;
     border-radius: 0.82rem;
   }
 
   .site-mark svg {
-    width: 1.34rem;
-    height: 1.34rem;
+    width: 1.32rem;
+    height: 1.32rem;
   }
 
   .site-title {
-    font-size: 1.02rem;
+    font-size: 1rem;
   }
 
   .site-description {
     font-size: 0.84rem;
-    line-height: 1.34;
+    line-height: 1.32;
   }
 
   .site-eyebrow {
@@ -461,59 +461,7 @@ h1 {
   }
 
   .footer {
-    padding-bottom: 0.72rem;
-  }
-}
-
-@media (max-height: 740px) and (min-width: 821px) {
-  .shell {
-    min-height: 100vh;
-    padding-top: 0;
-    padding-bottom: 0;
-    gap: clamp(0.8rem, 2vw, 1.6rem);
-  }
-
-  .cards {
-    gap: 0.46rem;
-  }
-
-  .socials {
-    margin-top: 1.25rem;
-  }
-
-  .site-card {
-    min-height: 4.65rem;
-    padding: 0.5rem 0.74rem 0.5rem 0.78rem;
-    border-radius: 1rem;
-  }
-
-  .site-mark {
-    width: 2.64rem;
-    height: 2.64rem;
-  }
-
-  .site-title {
-    font-size: 0.96rem;
-  }
-
-  .site-description {
-    font-size: 0.76rem;
-    line-height: 1.22;
-  }
-
-  .site-badge {
-    min-height: 1.08rem;
-    padding: 0 0.36rem;
-    font-size: 0.58rem;
-  }
-
-  .footer {
-    position: fixed;
-    left: 50%;
-    bottom: 0.52rem;
-    transform: translateX(-50%);
-    padding: 0;
-    pointer-events: none;
+    padding-bottom: 0.65rem;
   }
 }
 
