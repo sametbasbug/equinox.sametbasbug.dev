@@ -121,13 +121,13 @@ a {
   position: relative;
   z-index: 1;
   width: min(1080px, calc(100% - 32px));
-  min-height: calc(100vh - 76px);
+  min-height: calc(100vh - 56px);
   margin: 0 auto;
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
   gap: clamp(1.25rem, 3.4vw, 3.35rem);
   align-items: center;
-  padding: clamp(3rem, 8vw, 6.75rem) 0 2rem;
+  padding: clamp(2.4rem, 6.2vw, 5rem) 0 1.3rem;
 }
 
 .intro {
@@ -411,7 +411,7 @@ h1 {
   z-index: 1;
   width: min(1080px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 0 0 1.35rem;
+  padding: 0 0 0.9rem;
   display: flex;
   justify-content: space-between;
   gap: 1rem;
