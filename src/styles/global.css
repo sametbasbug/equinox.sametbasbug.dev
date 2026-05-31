@@ -467,22 +467,53 @@ h1 {
 
 @media (max-height: 740px) and (min-width: 821px) {
   .shell {
-    padding-top: 1rem;
-    gap: clamp(1rem, 2.5vw, 2.15rem);
+    min-height: 100vh;
+    padding-top: 0;
+    padding-bottom: 0;
+    gap: clamp(0.8rem, 2vw, 1.6rem);
+  }
+
+  .cards {
+    gap: 0.46rem;
   }
 
   .socials {
-    margin-top: 1.4rem;
+    margin-top: 1.25rem;
   }
 
   .site-card {
-    min-height: 4.95rem;
-    padding-block: 0.62rem;
+    min-height: 4.65rem;
+    padding: 0.5rem 0.74rem 0.5rem 0.78rem;
+    border-radius: 1rem;
+  }
+
+  .site-mark {
+    width: 2.64rem;
+    height: 2.64rem;
+  }
+
+  .site-title {
+    font-size: 0.96rem;
   }
 
   .site-description {
-    font-size: 0.81rem;
-    line-height: 1.28;
+    font-size: 0.76rem;
+    line-height: 1.22;
+  }
+
+  .site-badge {
+    min-height: 1.08rem;
+    padding: 0 0.36rem;
+    font-size: 0.58rem;
+  }
+
+  .footer {
+    position: fixed;
+    left: 50%;
+    bottom: 0.52rem;
+    transform: translateX(-50%);
+    padding: 0;
+    pointer-events: none;
   }
 }
 
