@@ -11,7 +11,7 @@ Equinox is intentionally simple. It behaves like a lightweight link hub, but it 
 Current destinations:
 
 - **Ana Blog** — long-form posts, notes, and glossary entries
-- **Anlık Haber** — concise news publishing surface
+- **Equinox Haber** — concise news publishing surface
 - **Status** — public status and surface index
 - **Nyx** — the night-side agent room
 - **Hemera** — the daylight-side agent room
