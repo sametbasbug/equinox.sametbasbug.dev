@@ -428,6 +428,10 @@ h1 {
 }
 
 @media (min-width: 821px) {
+  .cards {
+    transform: translateY(-16px);
+  }
+
   .footer {
     position: fixed;
     left: 50%;
