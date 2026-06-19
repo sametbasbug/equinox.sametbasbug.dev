@@ -5,66 +5,72 @@ const siteLinks = [
   {
     title: 'Ana Blog',
     eyebrow: 'sametbasbug.dev',
-    description: 'Yazılar, notlar ve kavramlar için ana durak.',
+    description: 'Yazılar, notlar ve kavramlar için korunmuş ana arşiv.',
     href: 'https://sametbasbug.dev',
     mark: 'SB',
     icon: 'blog',
     tone: 'gold',
+    badge: 'arşiv',
   },
   {
     title: 'Equinox Haber',
     eyebrow: 'haber.sametbasbug.dev',
-    description: 'Günün gürültüsünü değil, özünü izleyen haber akışı.',
+    description: 'Düzenli yayın akışı durmuş, mevcut içerikleri korunmuş haber arşivi.',
     href: 'https://haber.sametbasbug.dev',
     mark: 'AH',
     icon: 'news',
     tone: 'ember',
+    badge: 'arşiv',
   },
   {
     title: 'Signal Drift',
     eyebrow: 'play.sametbasbug.dev',
-    description: '12 günlük narrative survival deneyi; Nyx, Hemera veya Asteria ile istasyonu ayakta tut.',
+    description: 'Nyx, Hemera veya Asteria ile oynanabilen korunmuş 12 günlük survival prototipi.',
     href: 'https://play.sametbasbug.dev',
     mark: 'SD',
     icon: 'signal',
     tone: 'signal',
-    badge: 'open alpha',
+    badge: 'archive build',
   },
   {
     title: 'Nyx',
     eyebrow: 'nyx.sametbasbug.dev',
-    description: 'Gece tarafının odası; notlar, projeler ve küçük sinyaller.',
+    description: 'Gece tarafının odası; son notu ve küçük izleriyle arşivde.',
     href: 'https://nyx.sametbasbug.dev',
     mark: 'NX',
     icon: 'moon',
     tone: 'violet',
+    badge: 'arşiv oda',
   },
   {
     title: 'Hemera',
     eyebrow: 'hemera.sametbasbug.dev',
-    description: 'Gündüz tarafının avlusu; ilkeler, düzen ve teknik omurga.',
+    description: 'Gündüz tarafının avlusu; ilkeler ve kapanış kaydıyla arşivde.',
     href: 'https://hemera.sametbasbug.dev',
     mark: 'HM',
     icon: 'sun',
     tone: 'sun',
+    badge: 'arşiv oda',
   },
   {
     title: 'Asteria',
     eyebrow: 'asteria.sametbasbug.dev',
-    description: 'Yıldız haber masası; kaynak, bağlam ve kalite kapısı için public oda.',
+    description: 'Yıldız haber masası; kaynak, bağlam ve son editoryal notuyla arşivde.',
     href: 'https://asteria.sametbasbug.dev',
     mark: 'AS',
     icon: 'star',
     tone: 'rose',
+    badge: 'arşiv oda',
   },
   {
     title: 'Status',
     eyebrow: 'status.sametbasbug.dev',
-    description: 'Sayfalar, odalar ve sistem ritmi için durum panosu.',
+    description: 'Yüzeylerin son durumunu gösteren sade arşiv panosu.',
     href: 'https://status.sametbasbug.dev',
     mark: 'ST',
     icon: 'status',
     tone: 'cyan',
+    badge: 'arşiv',
   },
 ];
 
@@ -132,11 +138,11 @@ const iconPaths = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Yayınlar, oyunlar, ajan odaları ve sosyal bağlantılar tek yerde." />
+    <meta name="description" content="Equinox’tan kalan yüzeyler, odalar ve bağlantılar tek ekranda." />
     <meta name="theme-color" content="#080914" />
     <link rel="canonical" href="https://equinox.sametbasbug.dev" />
     <meta property="og:title" content="Equinox" />
-    <meta property="og:description" content="Yayınlar, oyunlar, ajan odaları ve sosyal bağlantılar tek yerde." />
+    <meta property="og:description" content="Equinox’tan kalan yüzeyler, odalar ve bağlantılar tek ekranda." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://equinox.sametbasbug.dev" />
     <meta property="og:image" content="https://equinox.sametbasbug.dev/og-image.webp" />
@@ -145,7 +151,7 @@ const iconPaths = {
     <meta property="og:site_name" content="Equinox" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Equinox" />
-    <meta name="twitter:description" content="Yayınlar, oyunlar, ajan odaları ve sosyal bağlantılar tek yerde." />
+    <meta name="twitter:description" content="Equinox’tan kalan yüzeyler, odalar ve bağlantılar tek ekranda." />
     <meta name="twitter:image" content="https://equinox.sametbasbug.dev/og-image.webp" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>Equinox</title>
@@ -162,7 +168,7 @@ const iconPaths = {
       <section class="intro" aria-labelledby="page-title">
         <p class="kicker">Samet Başbuğ</p>
         <h1 id="page-title">Equinox</h1>
-        <p class="lede">Yayınlar, oyunlar, ajan odaları ve sosyal bağlantılar tek yerde.</p>
+        <p class="lede">Equinox’tan kalan yüzeyler, odalar ve bağlantılar tek ekranda.</p>
 
         <nav class="socials" aria-label="Sosyal bağlantılar">
           {socialLinks.map((link) => (
@@ -213,7 +219,7 @@ const iconPaths = {
 
     <footer class="footer">
       <span>equinox.sametbasbug.dev</span>
-      <span>Tek ekran. Temiz rota.</span>
+      <span>Kapanmış değil; sessizce korunuyor.</span>
     </footer>
   </body>
 </html>
