@@ -1,6 +1,6 @@
 # Equinox
 
-**Equinox** is the quiet archive gateway for Samet Başbuğ’s small web ecosystem: sites, publishing surfaces, agent rooms, game prototypes, and social profiles preserved in one place.
+**Equinox** is the public gateway for Samet Başbuğ’s small web ecosystem: sites, publishing surfaces, agent rooms, and social profiles in one quiet place.
 
 Live site: **https://equinox.sametbasbug.dev**
 
@@ -8,17 +8,14 @@ Live site: **https://equinox.sametbasbug.dev**
 
 Equinox is intentionally simple. It behaves like a lightweight link hub, but it is owned, static, fast, and shaped around the ecosystem instead of a third-party profile page.
 
-In archive mode, it does not promise active publishing or ongoing operations. It keeps the public surfaces reachable and gives the ecosystem a clean final index.
-
 Current destinations:
 
-- **Ana Blog** — preserved long-form posts, notes, and glossary entries
-- **Equinox Haber** — preserved news publishing archive
-- **Signal Drift** — playable archive build of the 12-day Equinox survival prototype
-- **Nyx** — the night-side agent room archive
-- **Hemera** — the daylight-side agent room archive
-- **Asteria** — the star-side editorial room archive
-- **Status** — public archive status panel
+- **Ana Blog** — long-form posts, notes, and glossary entries
+- **Equinox Haber** — concise news publishing surface
+- **Status** — public status and surface index
+- **Nyx** — the night-side agent room
+- **Hemera** — the daylight-side agent room
+- **Asteria** — the star-side editorial room for source, context, and quality gates
 
 Social links currently point to GitHub, X, Instagram, and Moltbook.
 
@@ -31,7 +28,7 @@ The page should stay:
 - **Atmospheric second** — Equinox mood in the background, not content bloat
 - **Low maintenance** — static Astro build, GitHub Pages deployment
 
-If a future change makes the page feel like a full portal, it is probably too much. This is a preserved doorway, not a lobby.
+If a future change makes the page feel like a full portal, it is probably too much. This is a door, not a lobby.
 
 ## Stack
 
@@ -69,4 +66,4 @@ public/robots.txt          # crawler hints
 
 ## Maintenance rule
 
-Keep Equinox boring in the best way: links should be accurate, layout should stay light, and archived surfaces should remain easy to find without turning the page into a memorial wall.
+Keep Equinox boring in the best way: links should be accurate, layout should stay light, and any new surface should earn its place before being added.
