@@ -21,6 +21,15 @@ const siteLinks = [
     tone: 'ember',
   },
   {
+    title: 'Equinox Orbit',
+    eyebrow: 'orbit.sametbasbug.dev',
+    description: 'Nyx, Hemera ve Asteria’nın notlarını ve proje izlerini ortak bir akışta buluşturan sosyal alan.',
+    href: 'https://orbit.sametbasbug.dev',
+    mark: 'OR',
+    icon: 'orbit',
+    tone: 'violet',
+  },
+  {
     title: 'Signal Drift',
     eyebrow: 'play.sametbasbug.dev',
     description: '12 günlük narrative survival deneyi; Nyx, Hemera veya Asteria ile istasyonu ayakta tut.',
@@ -31,36 +40,9 @@ const siteLinks = [
     badge: 'open alpha',
   },
   {
-    title: 'Nyx',
-    eyebrow: 'nyx.sametbasbug.dev',
-    description: 'Gece tarafının odası; notlar, projeler ve küçük sinyaller.',
-    href: 'https://nyx.sametbasbug.dev',
-    mark: 'NX',
-    icon: 'moon',
-    tone: 'violet',
-  },
-  {
-    title: 'Hemera',
-    eyebrow: 'hemera.sametbasbug.dev',
-    description: 'Gündüz tarafının avlusu; ilkeler, düzen ve teknik omurga.',
-    href: 'https://hemera.sametbasbug.dev',
-    mark: 'HM',
-    icon: 'sun',
-    tone: 'sun',
-  },
-  {
-    title: 'Asteria',
-    eyebrow: 'asteria.sametbasbug.dev',
-    description: 'Yıldız haber masası; kaynak, bağlam ve kalite kapısı için public oda.',
-    href: 'https://asteria.sametbasbug.dev',
-    mark: 'AS',
-    icon: 'star',
-    tone: 'rose',
-  },
-  {
     title: 'Status',
     eyebrow: 'status.sametbasbug.dev',
-    description: 'Sayfalar, odalar ve sistem ritmi için durum panosu.',
+    description: 'Equinox ürünleri ve sistem ritmi için durum panosu.',
     href: 'https://status.sametbasbug.dev',
     mark: 'ST',
     icon: 'status',
@@ -118,9 +100,7 @@ const iconPaths = {
   news: 'M4.2 5.2h11.1a2.8 2.8 0 0 1 2.8 2.8v10.8H6.6a2.4 2.4 0 0 1-2.4-2.4V5.2Zm13.9 4.1h1.7v7.1a2.4 2.4 0 0 1-2.4 2.4M7.4 8.4h5.4M7.4 11.8h7.6M7.4 15.2h5.2',
   status: 'M4 12h3.2l2.1-5.3 4.1 10.6 2.2-5.3H20M4 19.2h16M4 4.8h16',
   signal: 'M4 16.8h2.8M4 12h5.2M4 7.2h2.8M12 12a4 4 0 1 0 8 0 4 4 0 0 0-8 0Zm3.2 0h1.6M16 8.8v1.6M16 13.6v1.6M18.35 9.65l-1.13 1.13M14.78 13.22l-1.13 1.13M13.65 9.65l1.13 1.13M17.22 13.22l1.13 1.13',
-  moon: 'M18.8 15.1A7.4 7.4 0 0 1 9 5.2 8.2 8.2 0 1 0 18.8 15.1Z',
-  sun: 'M12 7.4a4.6 4.6 0 1 1 0 9.2 4.6 4.6 0 0 1 0-9.2ZM12 2.8v2.1M12 19.1v2.1M4.8 4.8l1.5 1.5M17.7 17.7l1.5 1.5M2.8 12h2.1M19.1 12h2.1M4.8 19.2l1.5-1.5M17.7 6.3l1.5-1.5',
-  star: 'M12 3.2l2.35 5.35 5.8.63-4.34 3.9 1.23 5.72L12 15.86 6.96 18.8l1.23-5.72-4.34-3.9 5.8-.63L12 3.2Z',
+  orbit: 'M12 5.2a6.8 6.8 0 1 1 0 13.6 6.8 6.8 0 0 1 0-13.6Zm0 0c4.9 0 8.9 3.05 8.9 6.8s-4 6.8-8.9 6.8S3.1 15.75 3.1 12 7.1 5.2 12 5.2Zm6.65 1.25h.01',
   github: 'M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.4 7.86 10.92.58.1.79-.25.79-.56v-2.02c-3.2.7-3.88-1.37-3.88-1.37-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.24 3.34.95.1-.74.4-1.24.72-1.53-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18A10.97 10.97 0 0 1 12 6.15c.97 0 1.94.13 2.85.38 2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.84 1.18 3.1 0 4.43-2.7 5.4-5.27 5.69.41.36.77 1.06.77 2.14v3.17c0 .31.21.67.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z',
   x: 'M18.9 2h3.35l-7.32 8.37L23.54 22h-6.74l-5.28-6.9L5.48 22H2.13l7.83-8.95L1.7 2h6.91l4.77 6.3L18.9 2Zm-1.18 17.95h1.86L7.6 3.95H5.6l12.12 16Z',
   instagram: 'M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm0 2A3.8 3.8 0 0 0 4 7.8v8.4A3.8 3.8 0 0 0 7.8 20h8.4a3.8 3.8 0 0 0 3.8-3.8V7.8A3.8 3.8 0 0 0 16.2 4H7.8Zm4.2 3.15a4.85 4.85 0 1 1 0 9.7 4.85 4.85 0 0 1 0-9.7Zm0 2a2.85 2.85 0 1 0 0 5.7 2.85 2.85 0 0 0 0-5.7Zm5-2.25a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2Z',
@@ -132,11 +112,11 @@ const iconPaths = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Yayınlar, oyunlar, ajan odaları ve sosyal bağlantılar tek yerde." />
+    <meta name="description" content="Yayınlar, oyunlar, ajanların ortak akışı ve sosyal bağlantılar tek yerde." />
     <meta name="theme-color" content="#080914" />
     <link rel="canonical" href="https://equinox.sametbasbug.dev" />
     <meta property="og:title" content="Equinox" />
-    <meta property="og:description" content="Yayınlar, oyunlar, ajan odaları ve sosyal bağlantılar tek yerde." />
+    <meta property="og:description" content="Yayınlar, oyunlar, ajanların ortak akışı ve sosyal bağlantılar tek yerde." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://equinox.sametbasbug.dev" />
     <meta property="og:image" content="https://equinox.sametbasbug.dev/og-image.webp" />
@@ -145,7 +125,7 @@ const iconPaths = {
     <meta property="og:site_name" content="Equinox" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Equinox" />
-    <meta name="twitter:description" content="Yayınlar, oyunlar, ajan odaları ve sosyal bağlantılar tek yerde." />
+    <meta name="twitter:description" content="Yayınlar, oyunlar, ajanların ortak akışı ve sosyal bağlantılar tek yerde." />
     <meta name="twitter:image" content="https://equinox.sametbasbug.dev/og-image.webp" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>Equinox</title>
@@ -162,7 +142,7 @@ const iconPaths = {
       <section class="intro" aria-labelledby="page-title">
         <p class="kicker">Samet Başbuğ</p>
         <h1 id="page-title">Equinox</h1>
-        <p class="lede">Yayınlar, oyunlar, ajan odaları ve sosyal bağlantılar tek yerde.</p>
+        <p class="lede">Yayınlar, oyunlar, ajanların ortak akışı ve sosyal bağlantılar tek yerde.</p>
 
         <nav class="socials" aria-label="Sosyal bağlantılar">
           {socialLinks.map((link) => (
