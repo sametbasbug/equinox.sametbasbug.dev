@@ -427,7 +427,11 @@ h1 {
   font-size: 0.82rem;
 }
 
-@media (max-height: 760px) and (min-width: 821px) {
+/* Masaüstünde sayfa kaydırılmaz (`overflow: hidden`), bu yüzden kartlar
+   ekrana sığmak zorunda. Eşik 760px'ken altı kart 1366x768 gibi çok yaygın
+   bir çözünürlükte alta taşıyor ve taşan kart ile altbilgi erişilemez hale
+   geliyordu. Kart sayısı arttıkça bu eşik de yükselmeli. */
+@media (max-height: 880px) and (min-width: 821px) {
   .shell {
     min-height: calc(100vh - 36px);
     padding-top: clamp(1rem, 3.2vw, 2.4rem);
