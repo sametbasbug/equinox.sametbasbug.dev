@@ -62,6 +62,8 @@
   /* Kart, çip ve şerit zeminleri. */
   --panel: color-mix(in oklab, var(--c-surface-raised) 38%, transparent);
   --panel-line: color-mix(in oklab, var(--c-line) 72%, transparent);
+  /* Üzerine gelinen kart: aynı zemin, bir kademe daha oturmuş. */
+  --panel-hover: color-mix(in oklab, var(--c-surface-raised) 70%, transparent);
 
   /* Kaydırma çubuğu: korla tülün ortası — sayfa adındaki geçişin sıkışmış
      hâli. Zeminden ayrılacak kadar canlı, metinle yarışmayacak kadar
