@@ -79,14 +79,26 @@
     /* Yol her zaman ayrılsın: kısa ve uzun sayfa arasında yerleşim
        kaymasın. */
     scrollbar-gutter: stable;
+  }
 
-    /* Chrome 121'den beri standart özellikleri destekliyor ve bunlar
-       varken `::-webkit-scrollbar` kurallarını tamamen yok sayıyor.
-       Yani asıl görünümü bu iki satır kuruyor (Chrome + Firefox);
-       aşağıdaki webkit blokları yalnızca Safari'ye kalıyor. İkisi de
-       `--c-scrollbar`dan besleniyor ki tarayıcılar ayrışmasın. */
-    scrollbar-width: thin;
-    scrollbar-color: var(--c-scrollbar) transparent;
+  /* Standart `scrollbar-width`/`scrollbar-color` bilerek yalnızca
+     Firefox'a veriliyor.
+
+     Chrome 121'den beri bu iki özelliği destekliyor, ama tanımlıyken
+     `::-webkit-scrollbar` kurallarını tamamen yok sayıyor — ve macOS'ta
+     üste binen (yalnızca kaydırırken beliren) çubuğu kullanmaya devam
+     ediyor. Sayfaya ilk giren, altında devamı olduğunu göremiyordu.
+     Webkit kuralları devredeyken tarayıcı klasik, hep duran ve yer
+     kaplayan çubuğa geçiyor; istediğimiz bu.
+
+     `-moz-appearance` yalnızca Firefox'ta tanınıyor, yani bu blok
+     Chrome ve Safari'de hiç çalışmıyor. Kaldırılırsa webkit blokları
+     yeniden susar ve çubuk gizlenmeye döner. */
+  @supports (-moz-appearance: none) {
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: var(--c-scrollbar) transparent;
+    }
   }
 
   body {
