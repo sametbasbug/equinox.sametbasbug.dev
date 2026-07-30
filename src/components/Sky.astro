@@ -1,0 +1,252 @@
+---
+/**
+ * Sayfanın arkasındaki atmosfer: derin gradyanlar, sönüp yanan yıldızlar
+ * ve üst üçte birde duran yumuşak bir ufuk bandı.
+ *
+ * Site tek temada; burada gündüz karşılığı aranmaz.
+ */
+---
+
+<div class="sky" aria-hidden="true">
+  <div class="sky__wash"></div>
+  <div class="sky__orb sky__orb--day"></div>
+  <div class="sky__orb sky__orb--night"></div>
+  <div class="sky__horizon"></div>
+  <canvas class="sky__particles" id="sky-particles"></canvas>
+  <div class="sky__pointer"></div>
+  <div class="sky__grain"></div>
+</div>
+
+<style>
+  .sky {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    background: var(--c-surface);
+  }
+
+  .sky__wash {
+    position: absolute;
+    inset: -20%;
+    background:
+      radial-gradient(58% 48% at 12% 6%, var(--sky-1) 0%, transparent 60%),
+      radial-gradient(68% 58% at 88% 26%, var(--sky-3) 0%, transparent 62%),
+      radial-gradient(92% 68% at 50% 102%, var(--sky-2) 0%, transparent 70%);
+    opacity: 0.9;
+  }
+
+  .sky__orb {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(90px);
+    opacity: calc(var(--glow) * 0.5);
+    will-change: transform;
+  }
+
+  .sky__orb--day {
+    width: 44vmax;
+    height: 44vmax;
+    top: -16vmax;
+    left: -12vmax;
+    background: radial-gradient(circle, var(--c-ember) 0%, transparent 68%);
+    animation: drift 26s var(--ease-swift) infinite alternate;
+  }
+
+  .sky__orb--night {
+    width: 38vmax;
+    height: 38vmax;
+    top: 22vh;
+    right: -14vmax;
+    background: radial-gradient(circle, var(--c-veil) 0%, transparent 66%);
+    animation: drift 34s var(--ease-swift) infinite alternate-reverse;
+  }
+
+  /* Ufuk kuşağı: keskin bir çizgi değil, ekranın üst üçte birinde duran
+     yumuşak bir ışık bandı. Keskin çizgi hero'daki .threshold'un işi —
+     orada başlığın tabanına hizalı duruyor, burada olsa onu keserdi. */
+  .sky__horizon {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 34%;
+    height: 8rem;
+    translate: 0 -50%;
+    background: radial-gradient(
+      68% 100% at 50% 50%,
+      color-mix(in oklab, var(--c-ember) 9%, transparent),
+      transparent 72%
+    );
+    opacity: calc(var(--glow) * 1.1);
+  }
+
+  .sky__particles {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: calc(var(--glow) * 1.1);
+  }
+
+  /* İmleci takip eden sıcak ışık — yalnızca fare olan cihazlarda */
+  .sky__pointer {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    background: radial-gradient(
+      26rem 26rem at var(--px, 50%) var(--py, 50%),
+      color-mix(in oklab, var(--c-ember) 14%, transparent) 0%,
+      transparent 65%
+    );
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .sky__pointer {
+      opacity: 1;
+    }
+  }
+
+  /* Film greni — dijital düzlüğü kıran ince gürültü */
+  .sky__grain {
+    position: absolute;
+    inset: -50%;
+    opacity: var(--grain);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: grain-shift 6s steps(6) infinite;
+  }
+
+  @keyframes grain-shift {
+    0% { transform: translate(0, 0); }
+    20% { transform: translate(-3%, 2%); }
+    40% { transform: translate(2%, -4%); }
+    60% { transform: translate(-2%, -2%); }
+    80% { transform: translate(3%, 3%); }
+    100% { transform: translate(0, 0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sky__orb,
+    .sky__grain {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>(".sky");
+  const canvas = document.getElementById("sky-particles") as HTMLCanvasElement | null;
+  const pointer = root?.querySelector<HTMLElement>(".sky__pointer");
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // İmleç ışığı: hedefe doğru yumuşayarak yaklaşıyor, her karede değil.
+  if (pointer && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    let tx = 50;
+    let ty = 50;
+    let cx = 50;
+    let cy = 50;
+    let raf = 0;
+
+    const loop = () => {
+      cx += (tx - cx) * 0.06;
+      cy += (ty - cy) * 0.06;
+      pointer.style.setProperty("--px", `${cx}%`);
+      pointer.style.setProperty("--py", `${cy}%`);
+      raf = Math.abs(tx - cx) + Math.abs(ty - cy) > 0.05 ? requestAnimationFrame(loop) : 0;
+    };
+
+    window.addEventListener(
+      "pointermove",
+      (event) => {
+        tx = (event.clientX / window.innerWidth) * 100;
+        ty = (event.clientY / window.innerHeight) * 100;
+        if (!raf) raf = requestAnimationFrame(loop);
+      },
+      { passive: true },
+    );
+  }
+
+  const ctx = canvas?.getContext("2d");
+
+  if (canvas && ctx) {
+    type Particle = {
+      x: number;
+      y: number;
+      r: number;
+      a: number;
+      speed: number;
+      phase: number;
+    };
+
+    let items: Particle[] = [];
+    let width = 0;
+    let height = 0;
+    let t = 0;
+    let running = true;
+
+    const size = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = canvas.clientWidth;
+      height = canvas.clientHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const count = Math.round((width * height) / 9000);
+
+      items = Array.from({ length: count }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 1.15 + 0.25,
+        a: Math.random() * 0.55 + 0.18,
+        speed: Math.random() * 0.6 + 0.25,
+        phase: Math.random() * Math.PI * 2,
+      }));
+    };
+
+    const draw = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      for (const p of items) {
+        const twinkle = reduced ? 1 : 0.65 + Math.sin(t * p.speed + p.phase) * 0.35;
+        ctx.globalAlpha = p.a * twinkle;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = "#fff";
+        ctx.fill();
+      }
+
+      ctx.globalAlpha = 1;
+    };
+
+    const tick = () => {
+      if (!running) return;
+      t += 0.016;
+      draw();
+      // Hareket kısıtlıysa tek kare çizilir, döngü sürmez.
+      if (!reduced) requestAnimationFrame(tick);
+    };
+
+    size();
+    tick();
+
+    let resizeTimer = 0;
+    window.addEventListener(
+      "resize",
+      () => {
+        window.clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(() => {
+          size();
+          draw();
+        }, 180);
+      },
+      { passive: true },
+    );
+
+    document.addEventListener("visibilitychange", () => {
+      running = !document.hidden;
+      if (running) tick();
+    });
+  }
+</script>

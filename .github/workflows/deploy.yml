@@ -2,13 +2,19 @@ name: Deploy Equinox to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
+
+# Aynı anda tek yayın: art arda gelen push'lar kuyruğa girsin, biri
+# diğerinin ortasında devreye girmesin.
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -18,8 +24,6 @@ jobs:
         uses: actions/checkout@v6
       - name: Install, build, and upload site
         uses: withastro/action@v6
-        env:
-          PUBLIC_SITE_URL: https://equinox.sametbasbug.dev
         with:
           node-version: 24
 

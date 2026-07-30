@@ -1,0 +1,200 @@
+---
+import type { Gate } from "../data/equinox";
+import Icon from "./Icon.astro";
+
+/**
+ * Konsolun sağ yarısı: seçili alanın kartı.
+ *
+ * Altı panelin altısı da HTML'de duruyor, aynı ızgara gözünde üst üste.
+ * Böylece yükseklik en uzun panele göre sabitleniyor (geçişte sayfa
+ * zıplamıyor) ve bağlantılar tarayıcıya da arama motoruna da görünür
+ * kalıyor. Seçili olmayanlar `visibility: hidden` — yalnızca `opacity`
+ * kullanılsaydı klavye onların içindeki bağlantıya girmeye devam ederdi.
+ */
+
+interface Props {
+  gate: Gate;
+  index: number;
+  total: number;
+  current?: boolean;
+}
+
+const { gate, index, total, current = false } = Astro.props;
+const number = String(index + 1).padStart(2, "0");
+const totalLabel = String(total).padStart(2, "0");
+---
+
+<article
+  class:list={["panel", "tone", { "is-current": current }]}
+  style={`--hue:${gate.hue}`}
+  data-gate={gate.id}
+  id={`panel-${gate.id}`}
+  role="tabpanel"
+  aria-labelledby={`tab-${gate.id}`}
+  tabindex="0"
+>
+  <span class="panel__seam" aria-hidden="true"></span>
+  <span class="panel__glow" aria-hidden="true"></span>
+
+  <div class="relative flex items-start justify-between gap-4">
+    <span class="panel__mark grid h-14 w-14 shrink-0 place-items-center rounded-2xl border">
+      <Icon name={gate.icon} class="h-7 w-7" weight={1.4} />
+    </span>
+
+    <span class="flex items-center gap-3">
+      {
+        gate.badge && (
+          <span class="panel__badge label rounded-full border px-2.5 py-1 text-[0.55rem] leading-none">
+            {gate.badge}
+          </span>
+        )
+      }
+      <span class="label text-[0.65rem] tabular-nums">{number} / {totalLabel}</span>
+    </span>
+  </div>
+
+  <p class="label relative mt-6">{gate.kind}</p>
+
+  <h3 class="text-display relative mt-2 text-[clamp(1.75rem,3.6vw,2.5rem)] leading-tight">
+    {gate.title}
+  </h3>
+
+  <p class="panel__domain relative mt-2 font-mono text-[0.8rem] tracking-wide">
+    {gate.domain}
+  </p>
+
+  <p class="relative mt-4 max-w-xl text-[1.02rem] leading-relaxed text-ink-soft">
+    {gate.description}
+  </p>
+
+  {/* Bağlantı yalnızca bu; ::after ile panelin tamamına yayılıyor, böylece
+      kartın her yeri tıklanabilir ama tek bir semantik bağlantı var. */}
+  <a
+    class="panel__go relative mt-7 inline-flex items-center gap-3 self-start rounded-full border px-6 py-3 text-sm"
+    href={gate.href}
+    target="_blank"
+    rel="noreferrer"
+  >
+    Siteyi aç
+    <span class="panel__arrow" aria-hidden="true">↗</span>
+  </a>
+</article>
+
+<style>
+  .panel {
+    /* Altı panel tek gözde üst üste. */
+    grid-area: 1 / 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 1.25rem;
+    border: 1px solid var(--panel-line);
+    background: var(--panel);
+    backdrop-filter: blur(6px);
+    padding: 1.75rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(0.5rem);
+    transition:
+      opacity 0.4s var(--ease-out-expo),
+      transform 0.5s var(--ease-out-expo),
+      /* Gizlenirken görünürlük, sönme bitene kadar beklemeli. */ visibility 0s linear 0.4s;
+  }
+
+  .panel.is-current {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition:
+      opacity 0.4s var(--ease-out-expo),
+      transform 0.5s var(--ease-out-expo),
+      visibility 0s;
+  }
+
+  @media (min-width: 40rem) {
+    .panel {
+      padding: 2.25rem;
+    }
+  }
+
+  /* Kapı aralığı: sol kenardaki ışık şeridi ve içeri sızan ışık. */
+  .panel__seam {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, transparent, var(--accent), transparent);
+    opacity: 0.9;
+  }
+
+  .panel__glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      70% 105% at 0% 45%,
+      color-mix(in oklab, var(--accent) 16%, transparent),
+      transparent 68%
+    );
+  }
+
+  .panel__mark {
+    color: var(--accent);
+    border-color: color-mix(in oklab, var(--accent) 34%, transparent);
+    background: color-mix(in oklab, var(--accent) 12%, transparent);
+  }
+
+  .panel__badge {
+    border-color: color-mix(in oklab, var(--accent) 45%, transparent);
+    color: var(--accent);
+  }
+
+  .panel__domain {
+    color: var(--accent);
+  }
+
+  .panel__go {
+    color: var(--c-ink);
+    border-color: color-mix(in oklab, var(--accent) 45%, transparent);
+    background: color-mix(in oklab, var(--accent) 10%, transparent);
+    transition:
+      background-color 0.4s ease,
+      border-color 0.4s ease,
+      padding-right 0.5s var(--ease-out-expo);
+  }
+
+  /* Panelin tamamını tıklanabilir yapan katman. */
+  .panel__go::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .panel__go:hover,
+  .panel__go:focus-visible {
+    border-color: var(--accent);
+    background: color-mix(in oklab, var(--accent) 20%, transparent);
+    padding-right: 1.9rem;
+  }
+
+  .panel__arrow {
+    color: var(--accent);
+    transition: transform 0.5s var(--ease-out-expo);
+  }
+
+  .panel__go:hover .panel__arrow {
+    transform: translate(2px, -2px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .panel,
+    .panel__go,
+    .panel__arrow {
+      transition: none;
+      transform: none !important;
+    }
+  }
+</style>

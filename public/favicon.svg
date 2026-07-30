@@ -1,7 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Equinox">
-  <rect width="64" height="64" rx="16" fill="#080914"/>
-  <circle cx="25" cy="32" r="15" fill="#f6c66a" opacity="0.95"/>
-  <circle cx="39" cy="32" r="15" fill="#080914"/>
-  <path d="M11 34c12-12 30-12 42 0" fill="none" stroke="#73d7ff" stroke-width="2" opacity="0.65"/>
-  <path d="M12 30c12 12 28 12 40 0" fill="none" stroke="#9c8cff" stroke-width="2" opacity="0.5"/>
+  <rect width="64" height="64" rx="14" fill="#171722"/>
+  <circle cx="32" cy="32" r="25" fill="none" stroke="#8f7bf0" stroke-width="1.3" opacity="0.45"/>
+  <path d="M32 15a17 17 0 0 0 0 34Z" fill="#ffb069"/>
+  <path d="M32 15a17 17 0 0 1 0 34Z" fill="#8f7bf0" opacity="0.9"/>
 </svg>

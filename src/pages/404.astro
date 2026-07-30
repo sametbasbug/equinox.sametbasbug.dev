@@ -1,29 +1,61 @@
 ---
-import '../styles/global.css';
+import Base from "../layouts/Base.astro";
+import { gates } from "../data/equinox";
 ---
-<!doctype html>
-<html lang="tr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Bu Equinox rotası bulunamadı." />
-    <meta name="theme-color" content="#080914" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <title>404 · Equinox</title>
-  </head>
-  <body>
-    <div class="sky" aria-hidden="true">
-      <span class="orb orb-sun"></span>
-      <span class="orb orb-moon"></span>
-      <span class="orbit orbit-one"></span>
-      <span class="orbit orbit-two"></span>
-    </div>
 
-    <main class="not-found-shell" aria-labelledby="not-found-title">
-      <p class="kicker">404</p>
-      <h1 id="not-found-title">Bu rota kaybolmuş.</h1>
-      <p class="lede">Aradığın bağlantı taşınmış ya da hiç açılmamış olabilir. Equinox ana kapısı hâlâ burada.</p>
-      <a class="home-link" href="/">Ana sayfaya dön</a>
-    </main>
-  </body>
-</html>
+<Base
+  title="Bu rota yok"
+  description="Aradığın Equinox adresi taşınmış ya da hiç açılmamış olabilir."
+  indexable={false}
+>
+  <main class="flex min-h-[100svh] flex-col justify-center px-5 py-24 sm:px-8">
+    <div class="mx-auto w-full max-w-[88rem]">
+      <p class="label rise flex items-center gap-3" style="--rise-delay:100ms">
+        <span class="inline-block h-px w-10 bg-ember"></span>
+        404
+      </p>
+
+      <h1 class="mt-7">
+        <span class="line-mask">
+          <span
+            class="text-display block text-[clamp(2.4rem,9vw,6rem)]"
+            style="--line-delay:200ms"
+          >
+            Bu kapı yok.
+          </span>
+        </span>
+      </h1>
+
+      <p class="rise mt-7 max-w-xl text-lg leading-relaxed text-ink-soft" style="--rise-delay:420ms">
+        Aradığın adres taşınmış ya da hiç açılmamış olabilir. Eşik hâlâ yerinde —
+        buradan devam edebilirsin.
+      </p>
+
+      <div class="rise mt-10 flex flex-wrap gap-3" style="--rise-delay:560ms">
+        <a
+          href="/"
+          class="group inline-flex items-center gap-3 rounded-full bg-ember px-6 py-3 text-sm font-medium text-surface transition-all duration-500 hover:gap-5"
+        >
+          Eşiğe dön
+          <span class="transition-transform duration-500 group-hover:translate-x-1" aria-hidden="true">
+            →
+          </span>
+        </a>
+
+        {
+          gates.slice(0, 3).map((gate) => (
+            <a
+              class="tone inline-flex items-center rounded-full border border-line/70 px-5 py-3 text-sm text-ink-soft transition-colors duration-400 hover:text-ink"
+              style={`--hue:${gate.hue}; border-color:color-mix(in oklab, var(--accent) 22%, var(--c-line))`}
+              href={gate.href}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {gate.title}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </main>
+</Base>

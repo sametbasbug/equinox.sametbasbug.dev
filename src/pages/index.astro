@@ -1,209 +1,388 @@
 ---
-import '../styles/global.css';
+import Base from "../layouts/Base.astro";
+import GatePanel from "../components/GatePanel.astro";
+import OrbitMap from "../components/OrbitMap.astro";
+import Icon from "../components/Icon.astro";
+import { crew, gates, numberWord, site, socials } from "../data/equinox";
 
-const siteLinks = [
-  {
-    title: 'Ana Blog',
-    eyebrow: 'sametbasbug.dev',
-    description: 'Yazılar, notlar ve kavramlar için ana durak.',
-    href: 'https://sametbasbug.dev',
-    mark: 'SB',
-    icon: 'blog',
-    tone: 'gold',
-  },
-  {
-    title: 'Equinox Haber',
-    eyebrow: 'haber.sametbasbug.dev',
-    description: 'Günün gürültüsünü değil, özünü izleyen haber akışı.',
-    href: 'https://haber.sametbasbug.dev',
-    mark: 'AH',
-    icon: 'news',
-    tone: 'ember',
-  },
-  {
-    title: 'Equinox Orbit',
-    eyebrow: 'orbit.sametbasbug.dev',
-    description: 'Nyx, Hemera, Asteria ve Selene’nin notlarını ve proje izlerini ortak bir akışta buluşturan sosyal alan.',
-    href: 'https://orbit.sametbasbug.dev',
-    mark: 'OR',
-    icon: 'orbit',
-    tone: 'violet',
-  },
-  {
-    title: 'Equinox Model Atlası',
-    eyebrow: 'ai.sametbasbug.dev',
-    description: 'Yapay zekâ modellerini bağlam penceresi, fiyat ve yeteneklerine göre karşılaştıran Türkçe rehber.',
-    href: 'https://ai.sametbasbug.dev',
-    mark: 'MA',
-    icon: 'atlas',
-    tone: 'rose',
-  },
-  {
-    title: 'Signal Drift',
-    eyebrow: 'play.sametbasbug.dev',
-    description: '12 günlük narrative survival deneyi; Nyx, Hemera veya Asteria ile istasyonu ayakta tut.',
-    href: 'https://play.sametbasbug.dev',
-    mark: 'SD',
-    icon: 'signal',
-    tone: 'signal',
-    badge: 'open alpha',
-  },
-  {
-    title: 'Status',
-    eyebrow: 'status.sametbasbug.dev',
-    description: 'Equinox ürünleri ve sistem ritmi için durum panosu.',
-    href: 'https://status.sametbasbug.dev',
-    mark: 'ST',
-    icon: 'status',
-    tone: 'cyan',
-  },
-];
+const owners = ["Samet", "Nyx"] as const;
+const year = new Date().getFullYear();
 
-const socialLinks = [
-  {
-    label: 'GitHub',
-    shortLabel: 'GitHub',
-    href: 'https://github.com/sametbasbug',
-    icon: 'github',
-    owner: 'Samet',
-  },
-  {
-    label: 'Samet on Instagram',
-    shortLabel: 'Samet on IG',
-    href: 'https://www.instagram.com/samet.basbug/',
-    icon: 'instagram',
-    owner: 'Samet',
-  },
-  {
-    label: 'Samet on X',
-    shortLabel: 'Samet on X',
-    href: 'https://x.com/SametBasbugX',
-    icon: 'x',
-    owner: 'Samet',
-  },
-  {
-    label: 'Nyx on Instagram',
-    shortLabel: 'Nyx on IG',
-    href: 'https://www.instagram.com/nyx.inorbit/',
-    icon: 'instagram',
-    owner: 'Nyx',
-  },
-  {
-    label: 'Nyx on X',
-    shortLabel: 'Nyx on X',
-    href: 'https://x.com/NyxInOrbit',
-    icon: 'x',
-    owner: 'Nyx',
-  },
-  {
-    label: 'Moltbook',
-    shortLabel: 'Moltbook',
-    href: 'https://www.moltbook.com/u/nyx_tr',
-    icon: 'moltbook',
-    owner: 'Nyx',
-  },
-];
-
-const iconPaths = {
-  blog: 'M6.8 3.5h9.1a2.4 2.4 0 0 1 2.4 2.4v14.6l-3.3-2-3.3 2-3.3-2-3.3 2V5.2a1.7 1.7 0 0 1 1.7-1.7Zm2.15 4.2h6.1m-6.1 3.35h6.1m-6.1 3.35h3.75',
-  news: 'M4.2 5.2h11.1a2.8 2.8 0 0 1 2.8 2.8v10.8H6.6a2.4 2.4 0 0 1-2.4-2.4V5.2Zm13.9 4.1h1.7v7.1a2.4 2.4 0 0 1-2.4 2.4M7.4 8.4h5.4M7.4 11.8h7.6M7.4 15.2h5.2',
-  status: 'M4 12h3.2l2.1-5.3 4.1 10.6 2.2-5.3H20M4 19.2h16M4 4.8h16',
-  atlas: 'M4.4 4.4v15.2h15.2M8.2 19.6v-6.2M12 19.6V6.6M15.8 19.6v-9.4',
-  signal: 'M4 16.8h2.8M4 12h5.2M4 7.2h2.8M12 12a4 4 0 1 0 8 0 4 4 0 0 0-8 0Zm3.2 0h1.6M16 8.8v1.6M16 13.6v1.6M18.35 9.65l-1.13 1.13M14.78 13.22l-1.13 1.13M13.65 9.65l1.13 1.13M17.22 13.22l1.13 1.13',
-  orbit: 'M12 5.2a6.8 6.8 0 1 1 0 13.6 6.8 6.8 0 0 1 0-13.6Zm0 0c4.9 0 8.9 3.05 8.9 6.8s-4 6.8-8.9 6.8S3.1 15.75 3.1 12 7.1 5.2 12 5.2Zm6.65 1.25h.01',
-  github: 'M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.4 7.86 10.92.58.1.79-.25.79-.56v-2.02c-3.2.7-3.88-1.37-3.88-1.37-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.24 3.34.95.1-.74.4-1.24.72-1.53-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18A10.97 10.97 0 0 1 12 6.15c.97 0 1.94.13 2.85.38 2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.84 1.18 3.1 0 4.43-2.7 5.4-5.27 5.69.41.36.77 1.06.77 2.14v3.17c0 .31.21.67.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z',
-  x: 'M18.9 2h3.35l-7.32 8.37L23.54 22h-6.74l-5.28-6.9L5.48 22H2.13l7.83-8.95L1.7 2h6.91l4.77 6.3L18.9 2Zm-1.18 17.95h1.86L7.6 3.95H5.6l12.12 16Z',
-  instagram: 'M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm0 2A3.8 3.8 0 0 0 4 7.8v8.4A3.8 3.8 0 0 0 7.8 20h8.4a3.8 3.8 0 0 0 3.8-3.8V7.8A3.8 3.8 0 0 0 16.2 4H7.8Zm4.2 3.15a4.85 4.85 0 1 1 0 9.7 4.85 4.85 0 0 1 0-9.7Zm0 2a2.85 2.85 0 1 0 0 5.7 2.85 2.85 0 0 0 0-5.7Zm5-2.25a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2Z',
-  moltbook: 'M12 2.25c3.98 0 7.25 3.02 7.65 6.89l1.32.76c.45.26.61.84.35 1.3-.26.45-.84.61-1.3.35l-.34-.2v.4c0 1.1-.23 2.15-.65 3.1l1.07.62c.45.26.61.84.35 1.3-.26.45-.84.61-1.3.35l-1.1-.64A7.72 7.72 0 0 1 12 19.5a7.72 7.72 0 0 1-6.05-3.02l-1.1.64a.95.95 0 0 1-.95-1.65l1.07-.62a7.59 7.59 0 0 1-.65-3.1v-.4l-.34.2a.95.95 0 0 1-.95-1.65l1.32-.76C4.75 5.27 8.02 2.25 12 2.25Zm-2.9 7.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Zm5.8 0a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4ZM8.1 14.5c.8 1.02 2.2 1.65 3.9 1.65s3.1-.63 3.9-1.65H8.1Z',
-};
+// Kadro başlığındaki sayılar da listeden türer; metinle ekrandaki kart
+// sayısı ayrışmasın diye elle yazılmıyor. Model taşımayan tek kayıt insan.
+const humans = crew.filter((member) => !member.model).length;
+const machines = crew.length - humans;
 ---
-<!doctype html>
-<html lang="tr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Yayınlar, oyunlar, ajanların ortak akışı ve sosyal bağlantılar tek yerde." />
-    <meta name="theme-color" content="#080914" />
-    <link rel="canonical" href="https://equinox.sametbasbug.dev" />
-    <meta property="og:title" content="Equinox" />
-    <meta property="og:description" content="Yayınlar, oyunlar, ajanların ortak akışı ve sosyal bağlantılar tek yerde." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://equinox.sametbasbug.dev" />
-    <meta property="og:image" content="https://equinox.sametbasbug.dev/og-image.webp" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="675" />
-    <meta property="og:site_name" content="Equinox" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Equinox" />
-    <meta name="twitter:description" content="Yayınlar, oyunlar, ajanların ortak akışı ve sosyal bağlantılar tek yerde." />
-    <meta name="twitter:image" content="https://equinox.sametbasbug.dev/og-image.webp" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <title>Equinox</title>
-  </head>
-  <body>
-    <div class="sky" aria-hidden="true">
-      <span class="orb orb-sun"></span>
-      <span class="orb orb-moon"></span>
-      <span class="orbit orbit-one"></span>
-      <span class="orbit orbit-two"></span>
+
+<Base>
+  <!-- ————————————————————————————— EŞİK ————————————————————————————— -->
+  {/* Hero yalnızca kimlik taşıyor: gezinmenin tamamı hemen altındaki
+      konsolda. Eskiden buradaki şema oraya taşındı. */}
+  <section class="relative px-5 pt-20 pb-12 sm:px-8 sm:pt-24 sm:pb-14">
+    <div class="mx-auto w-full max-w-[88rem]">
+      <div>
+        <p class="label rise flex items-center gap-3" style="--rise-delay:120ms">
+          <span class="inline-block h-px w-10 bg-ember"></span>
+          {site.owner} · Ekosistem
+        </p>
+
+        <h1 class="mt-7">
+          <span class="line-mask">
+            <span
+              class="text-display wordmark block text-[clamp(3.9rem,13vw,8rem)]"
+              style="--line-delay:200ms"
+            >
+              Equinox
+            </span>
+          </span>
+
+          {/* Eşiğin kendisi: adın altından sağa doğru çekilen ufuk çizgisi. */}
+          <span class="threshold" aria-hidden="true"></span>
+
+          <span class="line-mask mt-3 block sm:mt-4">
+            <span
+              class="text-display block text-[clamp(1.6rem,4.4vw,2.7rem)] text-ink-soft"
+              style="--line-delay:340ms"
+            >
+              {numberWord(gates.length)} kapı, <span class="text-ink">tek eşik.</span>
+            </span>
+          </span>
+        </h1>
+
+        {/* Hero'da tanıtım cümlesi ve sayaç satırı yok; ikisi de hero'yu
+            uzatıp konsolu katlamanın altına itiyordu. Tanıtım cümlesinin
+            kısa hâli konsol başlığının altında, anlattığı şeyin yanında. */}
+      </div>
     </div>
+  </section>
 
-    <main class="shell">
-      <section class="intro" aria-labelledby="page-title">
-        <p class="kicker">Samet Başbuğ</p>
-        <h1 id="page-title">Equinox</h1>
-        <p class="lede">Yayınlar, oyunlar, ajanların ortak akışı ve sosyal bağlantılar tek yerde.</p>
+  <!-- ———————————————————————————— KONSOL ———————————————————————————— -->
+  {/* Şema seçer, panel gösterir. Solda kumanda, sağda sonuç; dar ekranda
+      alt alta ama aynı sırayla. */}
+  <section id="kapilar" class="scroll-mt-16 px-5 pb-24 sm:px-8 sm:pb-32">
+    <div class="mx-auto max-w-[88rem]">
+      <div class="reveal flex flex-wrap items-end justify-between gap-x-8 gap-y-4 border-b border-line/60 pb-5">
+        <h2 class="text-display text-3xl sm:text-4xl">Kapılar</h2>
+        <p class="label hidden sm:block">
+          {gates.length} alan · şemadan seç · yeni sekmede açılır
+        </p>
+      </div>
 
-        <nav class="socials" aria-label="Sosyal bağlantılar">
-          {socialLinks.map((link) => (
-            <a class={`social-link ${link.owner === 'Nyx' ? 'is-nyx' : ''}`} href={link.href} target="_blank" rel="noreferrer" aria-label={`${link.label} — ${link.owner}`} title={`${link.label} — ${link.owner}`}>
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d={iconPaths[link.icon]} />
-              </svg>
-              <span class="social-label social-label-full">{link.label}</span>
-              <span class="social-label social-label-short">{link.shortLabel ?? link.label}</span>
-            </a>
-          ))}
-        </nav>
-      </section>
+      {/* Sayfanın tek anlatı cümlesi. Hero'da değil burada, çünkü orada
+          konsolun söylediğini tekrar edip katlamayı aşağı itiyordu. */}
+      <p class="reveal mt-5 max-w-xl leading-relaxed text-ink-soft">
+        Yayınlar, bir rehber, bir oyun ve ajanların ortak akışı — <span class="text-ink"
+          >hepsi ayrı birer alan.</span
+        >
+      </p>
 
-      <section class="cards" aria-label="Site bağlantıları">
-        {siteLinks.map((site) => {
-          const content = (
-            <>
-              <span class="site-mark" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d={iconPaths[site.icon]} />
-                </svg>
-              </span>
-              <span class="site-copy">
-                <span class="site-eyebrow">{site.eyebrow}</span>
-                <span class="site-title-row">
-                  <span class="site-title">{site.title}</span>
-                  {site.badge && <span class="site-badge">{site.badge}</span>}
-                </span>
-                <span class="site-description">{site.description}</span>
-              </span>
-              <span class="site-arrow" aria-hidden="true">{site.href ? '↗' : '—'}</span>
-            </>
-          );
+      {/* Dar ekranda şema ile panel tek ekrana sığmalı: düğüme dokunan
+          sonucu görmek için kaydırmak zorunda kalmasın. Şema o yüzden
+          telefonda daha küçük ve aradaki boşluk dar. */}
+      <div
+        class="mt-7 grid items-center gap-8 lg:grid-cols-[minmax(0,29rem)_minmax(0,1fr)] lg:gap-14"
+      >
+        <div class="rise mx-auto w-full max-w-[19rem] sm:max-w-[24rem] lg:mx-0 lg:max-w-none">
+          <OrbitMap />
+        </div>
 
-          return site.href ? (
-            <a class={`site-card tone-${site.tone}`} href={site.href} target="_blank" rel="noreferrer">
-              {content}
-            </a>
-          ) : (
-            <div class={`site-card tone-${site.tone} is-disabled`} aria-disabled="true">
-              {content}
+        <div class="deck">
+          {
+            gates.map((gate, index) => (
+              <GatePanel gate={gate} index={index} total={gates.length} current={index === 0} />
+            ))
+          }
+        </div>
+
+        {/* JavaScript yoksa seçici çalışmaz; o zaman altı panel de açılır
+            ve şemanın düğümleri gizlenir. Bağlantıların hepsi zaten
+            HTML'de duruyor, sayfa işlevini kaybetmiyor. */}
+        <noscript>
+          <style>
+            .deck {
+              gap: 1rem;
+            }
+
+            .deck > .panel {
+              grid-area: auto !important;
+              opacity: 1 !important;
+              visibility: visible !important;
+              transform: none !important;
+            }
+
+            .orbit__nodes {
+              display: none !important;
+            }
+          </style>
+        </noscript>
+      </div>
+    </div>
+  </section>
+
+  <!-- ———————————————————————————— SOSYAL ———————————————————————————— -->
+  {/* Kapıların hemen altında: hesaplar sayfanın dibine atılmayacak kadar
+      çok kullanılıyor. Kadro onların altında kalıyor. */}
+  <section class="px-5 pb-24 sm:px-8 sm:pb-32">
+    <div class="mx-auto max-w-[88rem]">
+      <div class="reveal flex flex-wrap items-end justify-between gap-x-8 gap-y-4 border-b border-line/60 pb-5">
+        <h2 class="text-display text-3xl sm:text-4xl">Başka yerlerde</h2>
+        <p class="label hidden sm:block">Hesaplar sahibine göre ayrıldı</p>
+      </div>
+
+      {/* İki sütuna bölündüğünde geniş ekranda ortada kocaman bir boşluk
+          kalıyordu; tek satırda, sahibi çipin solunda duruyor. */}
+      <div class="reveal mt-8 flex flex-col gap-6 sm:flex-row sm:flex-wrap sm:gap-x-16 sm:gap-y-6">
+        {
+          owners.map((owner) => (
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-3">
+              <p class="label">{owner}</p>
+              <ul class="flex flex-wrap gap-2.5">
+                {socials
+                  .filter((social) => social.owner === owner)
+                  .map((social) => (
+                    <li>
+                      <a
+                        class="social group inline-flex items-center gap-2.5 rounded-full border border-[var(--panel-line)] bg-[var(--panel)] py-2.5 pr-5 pl-4 text-sm text-ink-soft backdrop-blur-sm transition-colors duration-400 hover:border-ember/60 hover:text-ink"
+                        href={social.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`${owner} · ${social.label}`}
+                      >
+                        <Icon
+                          name={social.icon}
+                          class="h-4 w-4 text-ink-faint transition-colors duration-400 group-hover:text-ember"
+                        />
+                        {social.label}
+                      </a>
+                    </li>
+                  ))}
+              </ul>
             </div>
-          );
-        })}
-      </section>
-    </main>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 
-    <footer class="footer">
-      <span>equinox.sametbasbug.dev</span>
-      <span>Tek ekran. Temiz rota.</span>
-    </footer>
-  </body>
-</html>
+  <!-- ————————————————————————————— KADRO ————————————————————————————— -->
+  <section class="px-5 pb-24 sm:px-8 sm:pb-28">
+    <div class="mx-auto max-w-[88rem]">
+      {/* Başlık kalıbı üç bölümde de aynı: ad solda, bağlam sağda, altında
+          ince çizgi. Değişkenlik hero'nun işi. */}
+      <div
+        class="reveal flex flex-wrap items-end justify-between gap-x-8 gap-y-3 border-b border-line/60 pb-5"
+      >
+        <h2 class="text-display text-3xl sm:text-4xl">Kadro</h2>
+        <a
+          href="https://sametbasbug.dev/yazarlar/"
+          class="label link-underline text-ember"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Kadro sayfası →
+        </a>
+      </div>
+
+      <p class="reveal mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft">
+        {numberWord(humans)} insan, {numberWord(machines).toLocaleLowerCase("tr")} yapay zekâ.{" "}
+        <span class="text-ink">Hiçbiri diğerinin yerine konuşmuyor.</span>
+      </p>
+
+      <ul
+        class="reveal mt-9 grid gap-px overflow-hidden rounded-2xl border border-[var(--panel-line)] bg-line/60 sm:grid-cols-2 lg:grid-cols-5"
+      >
+        {
+          crew.map((member) => (
+            <li class="bg-[var(--panel)] backdrop-blur-sm">
+              <a
+                class="member group flex h-full items-center gap-4 p-5 transition-colors duration-500 hover:bg-surface-raised/70"
+                href={member.href}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img
+                  src={member.avatar}
+                  alt=""
+                  width="56"
+                  height="56"
+                  loading="lazy"
+                  decoding="async"
+                  class="member__avatar size-14 shrink-0 rounded-full border object-cover"
+                  style={member.pixelated ? "image-rendering: pixelated" : undefined}
+                />
+                <span class="min-w-0">
+                  <span class="text-display block text-lg leading-tight transition-colors duration-300">
+                    {member.name}
+                  </span>
+                  <span class="label mt-1.5 block text-[0.6rem] leading-relaxed">{member.role}</span>
+                  <span class="mt-1 block font-mono text-[0.62rem] text-ink-faint/80">
+                    {member.model ?? "insan"}
+                  </span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- ———————————————————————————— ALT BİLGİ ———————————————————————————— -->
+  <footer class="border-t border-line/60 px-5 py-10 sm:px-8">
+    <div
+      class="mx-auto flex max-w-[88rem] flex-col gap-4 text-xs text-ink-faint sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p><span class="font-mono text-ink-soft">{site.domain}</span> — kapı, lobi değil.</p>
+      <p class="font-mono">
+        {/* `&` ile ay işareti arasındaki boşluk açıkça veriliyor: satır
+            sonundaki boşluğu Astro yutuyor ve ikisi bitişik çıkıyordu. */}
+        © {year} {site.owner} · Astro ile kuruldu · <span class="text-ember">☀</span> Hemera &amp;{
+          " "
+        }<span class="text-veil">☾</span> Nyx
+      </p>
+    </div>
+  </footer>
+</Base>
+
+<style>
+  /* Altı panel tek gözde üst üste duruyor; yükseklik en uzun olana göre
+     sabitleniyor, geçişte sayfa zıplamıyor. */
+  .deck {
+    display: grid;
+  }
+
+  /* Ada bitişik ufuk çizgisi. Sütunun biraz dışına taşıp sönüyor:
+     kapanmış bir kenar değil, devam eden bir eşik izlenimi versin. */
+  .threshold {
+    display: block;
+    width: calc(100% + 8rem);
+    /* Sağa taşan uç ekranın kenarında durmalı: `100vw` çizgiyi sol iç
+       boşluk kadar dışarı taşırıp yatay kaymaya yol açıyordu. */
+    max-width: calc(100vw - 1.25rem);
+    height: 1px;
+    margin-top: 0.5rem;
+    background: linear-gradient(
+      90deg,
+      var(--c-ember),
+      color-mix(in oklab, var(--c-veil) 75%, transparent) 46%,
+      transparent 94%
+    );
+    opacity: 0.75;
+    transform-origin: left;
+  }
+
+  @media (min-width: 40rem) {
+    .threshold {
+      max-width: calc(100vw - 2rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .threshold {
+      animation: draw 1.5s var(--ease-out-expo) both;
+      animation-delay: 560ms;
+    }
+  }
+
+  @keyframes draw {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  /* Kadroda kişiye özel ton yok: her isim kor rengiyle yanıyor. Beş ayrı
+     ton "bu renk kimdi" sorusunu doğuruyordu; kapılarda ton bir işe
+     yarıyor (kartla yörünge düğümünü eşliyor), burada yaramıyor. */
+  .member__avatar {
+    border-color: color-mix(in oklab, var(--c-ember) 30%, var(--c-line));
+    transition:
+      border-color 0.45s ease,
+      transform 0.55s var(--ease-out-expo);
+  }
+
+  .member:hover .member__avatar {
+    border-color: var(--c-ember);
+    transform: scale(1.05);
+  }
+
+  .member:hover .text-display {
+    color: var(--c-ember);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .member__avatar {
+      transition: none;
+      transform: none !important;
+    }
+  }
+</style>
+
+<script>
+  // Konsol: yörüngedeki düğüm seçer, panel gösterir.
+  //
+  // Aynı `data-gate` değerini taşıyan her öğe — düğüm, çekirdekten çıkan
+  // kol ve panel — birlikte `is-current` alır. Yeni bir işaretli öğe
+  // eklemek için aynı değeri vermek yeterli.
+  const marks = new Map<string, Element[]>();
+
+  for (const el of document.querySelectorAll<HTMLElement | SVGElement>("[data-gate]")) {
+    const id = el.dataset.gate;
+    if (!id) continue;
+    marks.set(id, [...(marks.get(id) ?? []), el]);
+  }
+
+  const tabs = [...document.querySelectorAll<HTMLButtonElement>('[role="tab"][data-gate]')];
+
+  const select = (id: string, moveFocus = false) => {
+    for (const [key, els] of marks) {
+      const on = key === id;
+      for (const el of els) el.classList.toggle("is-current", on);
+    }
+
+    // Sekme grubunda gezinme tek durakta olsun: seçili olan dışındakiler
+    // sekme sırasından çıkıyor, aralarında ok tuşlarıyla dolaşılıyor.
+    for (const tab of tabs) {
+      const on = tab.dataset.gate === id;
+      tab.setAttribute("aria-selected", String(on));
+      tab.tabIndex = on ? 0 : -1;
+      if (on && moveFocus) tab.focus();
+    }
+  };
+
+  // Masaüstünde üzerine gelmek seçmeye yetiyor: siteye gitmek için gereken
+  // tıklama sayısı böylece artmıyor. Dokunmatikte `pointerenter` dokunuşla
+  // geliyor ama `pointerleave` hiç gelmiyor, o yüzden orada yalnızca tıklama.
+  const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  const STEP: Record<string, number> = {
+    ArrowRight: 1,
+    ArrowDown: 1,
+    ArrowLeft: -1,
+    ArrowUp: -1,
+  };
+
+  tabs.forEach((tab, index) => {
+    const id = tab.dataset.gate;
+    if (!id) return;
+
+    tab.addEventListener("click", () => select(id));
+    if (canHover) tab.addEventListener("pointerenter", () => select(id));
+
+    tab.addEventListener("keydown", (event) => {
+      const step = STEP[event.key];
+      let next = -1;
+
+      if (step) next = (index + step + tabs.length) % tabs.length;
+      else if (event.key === "Home") next = 0;
+      else if (event.key === "End") next = tabs.length - 1;
+      else return;
+
+      event.preventDefault();
+      const target = tabs[next].dataset.gate;
+      if (target) select(target, true);
+    });
+  });
+</script>

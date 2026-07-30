@@ -1,0 +1,132 @@
+---
+import "../styles/global.css";
+import { site, gates, socials } from "../data/equinox";
+import Sky from "../components/Sky.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Arama motorlarına açık mı; 404 için kapatılır. */
+  indexable?: boolean;
+}
+
+const { title, description = site.description, indexable = true } = Astro.props;
+
+const pageTitle = title ? `${title} · ${site.title}` : `${site.title} — ${site.tagline}`;
+const base = Astro.site ?? new URL(site.url);
+const canonical = new URL(Astro.url.pathname, base).toString();
+const ogImage = new URL("/og.png", base).toString();
+
+/**
+ * Arama motorlarına ekosistemi tek yapı olarak anlatan yapısal veri.
+ * `sameAs` hem sosyal hesapları hem kardeş siteleri kapsıyor: hub'ın asıl
+ * işi bu bağları kurmak.
+ */
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${site.url}/#website`,
+      url: `${site.url}/`,
+      name: site.title,
+      inLanguage: "tr-TR",
+      description: site.description,
+      publisher: { "@id": `${site.url}/#person` },
+    },
+    {
+      "@type": "Person",
+      "@id": `${site.url}/#person`,
+      name: site.owner,
+      url: `${site.url}/`,
+      sameAs: [...gates.map((gate) => gate.href), ...socials.map((social) => social.href)],
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="canonical" href={canonical} />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    {!indexable && <meta name="robots" content="noindex, follow" />}
+
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:site_name" content={site.title} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${site.title} — ${site.tagline}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+
+    {/* Site yalnızca gece temasında. Sistem tercihine bakılmıyor, seçenek
+        de sunulmuyor: tasarım tek duruma göre kuruldu. */}
+    <meta name="theme-color" content="#171722" />
+
+    {/* İlk ekranda görünen iki kesit: başlığın ve gövdenin çekirdeği.
+        Yollar sabit (public/) — bu yüzden önceden istenebiliyorlar. */}
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/fraunces-core.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-core.woff2" crossorigin />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+  </head>
+
+  <body>
+    <a
+      href="#kapilar"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ember focus:px-5 focus:py-2 focus:text-sm focus:text-surface"
+    >
+      Kapılara geç
+    </a>
+
+    <Sky />
+
+    <slot />
+
+    <script>
+      // Kaydırmayla açılan bloklar. Bir kez görününce sabitlenir.
+      const targets = document.querySelectorAll<HTMLElement>(".reveal");
+
+      if (!("IntersectionObserver" in window)) {
+        targets.forEach((el) => el.classList.add("is-seen"));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              entry.target.classList.add("is-seen");
+              io.unobserve(entry.target);
+            }
+          },
+          { rootMargin: "0px 0px -10% 0px", threshold: 0.06 },
+        );
+
+        targets.forEach((el) => io.observe(el));
+      }
+    </script>
+
+    <script is:inline>
+      console.log(
+        "%c◐%c  Equinox — bütün kapılar tek eşikte.\n%cAstro ile kuruldu · equinox.sametbasbug.dev",
+        "color:#ffb069;font-size:20px",
+        "color:#f4f1ea;font-size:14px;font-weight:600",
+        "color:#7d7b8c;font-size:12px",
+      );
+    </script>
+  </body>
+</html>

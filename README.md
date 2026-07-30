@@ -1,41 +1,97 @@
 # Equinox
 
-**Equinox** is the public gateway for Samet Başbuğ’s small web ecosystem: publishing surfaces, experiments, the shared Orbit timeline, and social profiles in one quiet place.
+**Equinox**, Samet Başbuğ'un küçük web ekosisteminin giriş kapısı: yayın
+yüzeyleri, deneyler, ajanların ortak akışı ve sosyal hesaplar tek yerde.
 
-Live site: **https://equinox.sametbasbug.dev**
+Yayında: **https://equinox.sametbasbug.dev**
 
-## What it is
+## Ne olduğu
 
-Equinox is intentionally simple. It behaves like a lightweight link hub, but it is owned, static, fast, and shaped around the ecosystem instead of a third-party profile page.
+Tek sayfa. Bir kimlik bloğu, bir konsol, sosyal bağlantılar ve kadro
+şeridi. Bilerek kısa: burası bir kapı, lobi değil. Sayfanın işi
+ziyaretçiyi üç saniyede doğru alana göndermek.
 
-Current destinations:
+Kapılar:
 
-- **Ana Blog** — long-form posts, notes, and glossary entries
-- **Equinox Haber** — concise news publishing surface
-- **Equinox Orbit** — shared public timeline for Nyx, Hemera, and Asteria
-- **Signal Drift** — narrative survival experiment set inside the Equinox universe
-- **Status** — public status and surface index
+- **Ana Blog** — yazılar, notlar, sözlük
+- **Equinox Haber** — haber akışı
+- **Equinox Orbit** — ajanların ortak alanı
+- **Model Atlası** — yapay zekâ modeli karşılaştırma rehberi
+- **Signal Drift** — anlatı temelli hayatta kalma oyunu
+- **Status** — durum panosu
 
-Social links currently point to GitHub, X, Instagram, and Moltbook.
+## Tasarım
 
-## Design notes
+Ana blogla (`sametbasbug.dev`) aynı tasarım sistemini paylaşır: aynı
+renk tokenleri, aynı üç yazı tipi, aynı gece/gündüz mantığı. İki site
+yan yana konduğunda tek elden çıktığı anlaşılmalı — ama hub kendi
+fikrini taşır.
 
-The page should stay:
+**Eşik.** Ekinoks, gündüzle gecenin eşit olduğu an. Sayfanın adı bu
+geçişi taşıyor: "Equinox" yazısı kordan tüle uzanan bir gradyanla
+yazılıyor, hemen altından sağa doğru bir ufuk çizgisi çekiliyor.
 
-- **Fast first** — no heavy runtime, no unnecessary client JavaScript
-- **Clear first** — site cards for primary destinations, compact chips for social links
-- **Atmospheric second** — Equinox mood in the background, not content bloat
-- **Low maintenance** — static Astro build, GitHub Pages deployment
+**Konsol.** Sayfanın kalbi tek bir alet: solda yörünge, sağında panel.
+Yörünge ekosistemin kendisi — ortada Equinox, çevresinde altı alan — ve
+aynı zamanda kumandası. Bir düğüm seçilince yanındaki panel o alanın
+kartına dönüşür: adı, alan adı, tanımı ve rengi. Halkalar döner,
+düğümler durur; hareket eden bir hedefe tıklamak zorunda kalınmasın
+diye. Masaüstünde üzerine gelmek seçmeye yeter, yani siteye gitmek yine
+tek tık. Şema her ekranda var; telefonda küçülüp panelin üstüne oturur
+ve düğümler orada 46 px'lik dokunma hedefleri olur.
 
-If a future change makes the page feel like a full portal, it is probably too much. This is a door, not a lobby.
+Ayrı bir kart ızgarası yok, çünkü altı alanın adı ve ikonu zaten
+yörüngede duruyor — aynı listeyi iki kez göstermenin anlamı yoktu.
 
-## Stack
+**Kapı.** Panelin sol kenarında ince bir ışık şeridi var ve aralıktan
+içeri ışık sızıyor — açılan bir kapı. Rengi seçili alanın ton açısından
+geliyor, yani panel her seçimde baştan renkleniyor.
 
-- [Astro](https://astro.build/)
-- GitHub Pages
-- Custom domain via [`public/CNAME`](public/CNAME)
+**Tek durum.** Sitenin teması gece; anahtar yok, sistem tercihine de
+bakılmıyor. Tasarım baştan bu atmosfere göre kuruldu — gradyanlar,
+yıldızlar, ışıyan vurgu renkleri — ve aydınlık bir kesitte aynı etkiyi
+vermiyordu. Bir düzeni iyi yapmak, iki düzeni idare etmekten iyi geldi.
 
-## Local development
+## Hız
+
+Tek sayfa, sıfır çerçeve, sıfır ayrı JavaScript dosyası. Bütün betikler
+HTML'e gömülü ve toplamı 2,9 KB. En ağır kalem yazı tipleri; onlar da
+sayfanın gerçekten kullandığı 127 glife budanmış durumda:
+
+| | önce | sonra |
+| --- | --- | --- |
+| yazı tipleri | ~310 KB | ~120 KB |
+| avatarlar | 216 KB | 20 KB |
+| JavaScript | — | 2,9 KB (gömülü) |
+
+## İçerik eklemek
+
+Her şey `src/data/equinox.ts` içinde. Yeni bir kapı eklemek için
+`gates` dizisine bir kayıt yazmak yeterli:
+
+```ts
+{
+  id: "yeni",
+  title: "Yeni Alan",
+  short: "Yeni",              // yörünge düğümündeki etiket
+  domain: "yeni.sametbasbug.dev",
+  href: "https://yeni.sametbasbug.dev",
+  kind: "Araç",               // panelde başlığın üstündeki tür
+  description: "Tek cümlelik anlatım.",
+  icon: "atlas",              // src/data/icons.ts
+  hue: 190,                   // 0–360 arası ton açısı
+  badge: "yeni",              // isteğe bağlı
+}
+```
+
+Yörüngedeki düğümler eşit aralıkla yeniden dağılır, konsola yeni bir
+panel eklenir, hero'daki "Altı kapı" ifadesi kendini günceller. Elle
+sayı yazan hiçbir yer yok.
+
+Yeni bir ikon gerekiyorsa `src/data/icons.ts`e 24×24 ızgarada, tek renk
+çizgi olarak eklenir.
+
+## Kurulum
 
 ```bash
 npm install
@@ -44,25 +100,32 @@ npm run build
 npm run preview
 ```
 
-## Deployment
+## Yayın
 
-Deployment is handled by GitHub Actions on pushes to `main`:
+`main`'e push edilince GitHub Actions derleyip GitHub Pages'e atıyor:
 
-- Workflow: [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)
-- Domain: `equinox.sametbasbug.dev`
-- Output: static site from `astro build`
+- İş akışı: [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)
+- Alan adı: `public/CNAME`
+- Çıktı: `astro build` → `dist/`
 
-## Project shape
+## Yapı
 
 ```text
-src/pages/index.astro      # main link gateway
-src/pages/404.astro        # custom not-found page
-src/styles/global.css      # complete page styling
-public/CNAME               # custom domain
-public/favicon.svg         # site icon
-public/robots.txt          # crawler hints
+src/data/equinox.ts        # tek veri kaynağı
+src/data/icons.ts          # ikon yolları
+src/layouts/Base.astro     # head, tema, yapısal veri
+src/components/            # Sky, OrbitMap, GatePanel, Icon
+src/pages/index.astro      # sayfanın tamamı
+src/pages/404.astro        # kayıp rota
+src/styles/                # tasarım sistemi ve @font-face tanımları
+scripts/                   # font, ikon ve paylaşım kartı üreticileri
+public/                    # CNAME, ikonlar, fontlar, avatarlar, og.png
 ```
 
-## Maintenance rule
+Mimari notlar ve tuzaklar için [`AGENTS.md`](AGENTS.md).
 
-Keep Equinox boring in the best way: links should be accurate, layout should stay light, and any new surface should earn its place before being added.
+## Bakım kuralı
+
+Equinox'u iyi anlamda sıkıcı tut: bağlantılar doğru olsun, yerleşim
+hafif kalsın, yeni bir yüzey eklenmeden önce yerini hak etsin. Sayfa bir
+portala dönüşmeye başladıysa muhtemelen fazla gelmiştir.

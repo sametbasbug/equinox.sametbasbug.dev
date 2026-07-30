@@ -1,0 +1,304 @@
+---
+import { gates } from "../data/equinox";
+import Icon from "./Icon.astro";
+
+/**
+ * Ekosistemin şeması ve konsolun seçicisi: ortada Equinox, çevresinde
+ * altı alan.
+ *
+ * Düğümler sabit durur, halkalar döner — hareket eden bir hedefe tıklamak
+ * zorunda kalınmasın diye. Düğümler bağlantı değil sekme (`role="tab"`):
+ * seçileni yanındaki panel gösteriyor, siteye o panel götürüyor.
+ */
+
+const VIEW_W = 560;
+const VIEW_H = 440;
+const CX = VIEW_W / 2;
+const CY = VIEW_H / 2;
+const R = 140;
+/** Kollar çekirdeğin kenarından başlar, ortasından değil. */
+const CORE_R = 44;
+
+const nodes = gates.map((gate, index) => {
+  const angle = ((-90 + index * (360 / gates.length)) * Math.PI) / 180;
+  const cos = Math.cos(angle);
+  const sin = Math.sin(angle);
+
+  return {
+    gate,
+    // Çizim koordinatları (viewBox birimi)
+    x: CX + cos * R,
+    y: CY + sin * R,
+    x0: CX + cos * CORE_R,
+    y0: CY + sin * CORE_R,
+    // Yerleşim koordinatları (yüzde) — düğümler HTML, çünkü etiket ve
+    // odaklanma davranışı SVG metninden çok daha iyi kuruluyor.
+    left: 50 + (cos * R * 100) / VIEW_W,
+    top: 50 + (sin * R * 100) / VIEW_H,
+    side: Math.abs(cos) < 0.2 ? (sin < 0 ? "top" : "bottom") : cos > 0 ? "right" : "left",
+  };
+});
+---
+
+<div class="orbit" role="group" aria-label="Equinox alanları — şema">
+  <svg class="orbit__svg" viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} aria-hidden="true" focusable="false">
+    <defs>
+      <radialGradient id="core-glow">
+        <stop offset="0%" stop-color="var(--c-ember)" stop-opacity="0.45" />
+        <stop offset="55%" stop-color="var(--c-veil)" stop-opacity="0.12" />
+        <stop offset="100%" stop-color="var(--c-veil)" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+
+    <!-- dıştaki eğik yörünge -->
+    <g class="ring ring--outer">
+      <ellipse
+        cx={CX}
+        cy={CY}
+        rx="244"
+        ry="116"
+        fill="none"
+        stroke="var(--c-veil)"
+        stroke-opacity="0.3"
+        stroke-width="1"
+        transform={`rotate(-16 ${CX} ${CY})`}
+      />
+    </g>
+
+    <!-- kesikli dış halka -->
+    <g class="ring ring--mid">
+      <circle
+        cx={CX}
+        cy={CY}
+        r="192"
+        fill="none"
+        stroke="var(--c-ember)"
+        stroke-opacity="0.22"
+        stroke-width="1"
+        stroke-dasharray="2 12"
+      />
+    </g>
+
+    <!-- düğümlerin üstünde durduğu ana halka -->
+    <circle cx={CX} cy={CY} r={R} fill="none" stroke="var(--c-line)" stroke-width="1" />
+
+    <!-- kollar: çekirdekten her alana -->
+    {
+      nodes.map(({ gate, x, y, x0, y0 }) => (
+        <line
+          class="spoke"
+          data-gate={gate.id}
+          style={`--hue:${gate.hue}`}
+          x1={x0}
+          y1={y0}
+          x2={x}
+          y2={y}
+        />
+      ))
+    }
+
+    <!-- içteki hızlı halka -->
+    <g class="ring ring--inner">
+      <circle
+        cx={CX}
+        cy={CY}
+        r="84"
+        fill="none"
+        stroke="var(--c-veil)"
+        stroke-opacity="0.35"
+        stroke-width="1"
+        stroke-dasharray="26 14"
+      />
+    </g>
+
+    <!-- çekirdek: gündüzü geceden ayıran daire -->
+    <circle cx={CX} cy={CY} r="86" fill="url(#core-glow)" />
+    <path d={`M${CX} ${CY - 26}a26 26 0 0 0 0 52Z`} fill="var(--c-ember)" fill-opacity="0.92" />
+    <path d={`M${CX} ${CY - 26}a26 26 0 0 1 0 52Z`} fill="var(--c-veil)" fill-opacity="0.85" />
+    <circle
+      cx={CX}
+      cy={CY}
+      r="26"
+      fill="none"
+      stroke="var(--c-surface)"
+      stroke-opacity="0.5"
+      stroke-width="1"
+    />
+    <line
+      x1={CX}
+      y1={CY - 34}
+      x2={CX}
+      y2={CY + 34}
+      stroke="var(--c-ink)"
+      stroke-opacity="0.35"
+      stroke-width="1"
+      stroke-dasharray="2 6"
+    />
+  </svg>
+
+  <ul class="orbit__nodes" role="tablist" aria-label="Equinox alanları">
+    {
+      nodes.map(({ gate, left, top, side }, index) => (
+        <li role="presentation">
+          <button
+            type="button"
+            role="tab"
+            id={`tab-${gate.id}`}
+            aria-controls={`panel-${gate.id}`}
+            aria-selected={index === 0 ? "true" : "false"}
+            tabindex={index === 0 ? 0 : -1}
+            aria-label={gate.title}
+            class:list={["node", "tone", { "is-current": index === 0 }]}
+            data-gate={gate.id}
+            data-side={side}
+            style={`--hue:${gate.hue}; left:${left}%; top:${top}%`}
+          >
+            <Icon name={gate.icon} class="h-[18px] w-[18px]" weight={1.6} />
+            <span class="node__label" aria-hidden="true">
+              {gate.short}
+            </span>
+          </button>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .orbit {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 560 / 440;
+  }
+
+  .orbit__svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .ring {
+    transform-box: view-box;
+    transform-origin: 280px 220px;
+  }
+
+  .ring--outer {
+    animation: spin 160s linear infinite;
+  }
+
+  .ring--mid {
+    animation: spin 96s linear infinite reverse;
+  }
+
+  .ring--inner {
+    animation: spin 48s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      rotate: 360deg;
+    }
+  }
+
+  .spoke {
+    stroke: var(--accent);
+    stroke-width: 1;
+    stroke-opacity: 0.22;
+    transition:
+      stroke-opacity 0.45s ease,
+      stroke-width 0.45s ease;
+  }
+
+  .spoke.is-current {
+    stroke-opacity: 0.9;
+    stroke-width: 1.6;
+  }
+
+  .orbit__nodes {
+    position: absolute;
+    inset: 0;
+    list-style: none;
+  }
+
+  .node {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 2.9rem;
+    height: 2.9rem;
+    translate: -50% -50%;
+    border-radius: 999px;
+    color: var(--accent);
+    border: 1px solid color-mix(in oklab, var(--accent) 34%, transparent);
+    background: color-mix(in oklab, var(--c-surface) 82%, transparent);
+    backdrop-filter: blur(6px);
+    cursor: pointer;
+    transition:
+      scale 0.55s var(--ease-out-expo),
+      border-color 0.45s ease,
+      background-color 0.45s ease,
+      box-shadow 0.55s ease;
+  }
+
+  .node:hover {
+    border-color: var(--accent);
+    background: color-mix(in oklab, var(--accent) 12%, var(--c-surface));
+  }
+
+  /* Seçili düğüm: büyüyor ve çevresine halka alıyor. Panelde hangi alanın
+     durduğu şemadan da okunmalı. */
+  .node.is-current {
+    scale: 1.16;
+    border-color: var(--accent);
+    background: color-mix(in oklab, var(--accent) 18%, var(--c-surface));
+    box-shadow: 0 0 0 6px color-mix(in oklab, var(--accent) 14%, transparent);
+  }
+
+  .node__label {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--c-ink-faint);
+    transition: color 0.4s ease;
+  }
+
+  .node:hover .node__label,
+  .node.is-current .node__label {
+    color: var(--accent);
+  }
+
+  .node.is-current .node__label {
+    font-weight: 600;
+  }
+
+  .node[data-side="right"] .node__label {
+    left: calc(100% + 0.7rem);
+  }
+
+  .node[data-side="left"] .node__label {
+    right: calc(100% + 0.7rem);
+  }
+
+  .node[data-side="top"] .node__label {
+    bottom: calc(100% + 0.55rem);
+  }
+
+  .node[data-side="bottom"] .node__label {
+    top: calc(100% + 0.55rem);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ring {
+      animation: none;
+    }
+
+    .node {
+      transition: none;
+    }
+  }
+</style>

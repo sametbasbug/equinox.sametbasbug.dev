@@ -1,18 +1,23 @@
-# dependencies
-node_modules/
-
-# build output
+# derlenen çıktı
 dist/
 .astro/
 
-# system
-.DS_Store
+# bağımlılıklar
+node_modules/
 
-# logs
+# ortam
+.env
+.env.production
+
+# Claude Code yerel dosyaları (makineye özel)
+.claude/
+
+# işletim sistemi
+.DS_Store
+Thumbs.db
+
+# günlükler
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-
-# Claude Code yerel dosyaları (makineye özel)
-.claude/

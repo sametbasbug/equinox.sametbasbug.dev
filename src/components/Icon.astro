@@ -1,0 +1,27 @@
+---
+import type { IconName } from "../data/equinox";
+import { icons } from "../data/icons";
+
+interface Props {
+  name: IconName;
+  class?: string;
+  /** Çizgi ikonlarda kalınlık; dolu marka ikonlarında yok sayılır. */
+  weight?: number;
+}
+
+const { name, class: className = "", weight = 1.5 } = Astro.props;
+const icon = icons[name];
+---
+
+<svg
+  viewBox="0 0 24 24"
+  class={className}
+  aria-hidden="true"
+  focusable="false"
+  fill={icon.filled ? "currentColor" : "none"}
+  stroke={icon.filled ? undefined : "currentColor"}
+  stroke-width={icon.filled ? undefined : weight}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  set:html={icon.inner}
+/>
