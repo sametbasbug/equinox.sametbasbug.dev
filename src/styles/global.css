@@ -152,11 +152,16 @@
     border-radius: 3px;
   }
 
+  /* Optik boyut ekseni yazının gerçek boyutunu izlesin: tarayıcı `opsz`i
+     punto başına kendisi ayarlıyor. Elle sabitlenirse küçük başlıklar da
+     dev punto için çizilmiş ince, gergin harflerle geliyor — Fraunces'ta
+     bu en çok K'nın kolunda ve H'nin ince orta çizgisinde belli oluyor.
+     Bu yüzden `font-variation-settings` ile opsz yazılmaz. */
   h1,
   h2,
   h3 {
     font-family: var(--font-display);
-    font-variation-settings: "opsz" 120;
+    font-optical-sizing: auto;
     letter-spacing: -0.022em;
     text-wrap: balance;
   }
@@ -178,7 +183,8 @@
 
 @utility text-display {
   font-family: var(--font-display);
-  font-variation-settings: "opsz" 144;
+  /* Bkz. h1–h3: opsz elle sabitlenmiyor, punto ile birlikte geziyor. */
+  font-optical-sizing: auto;
   letter-spacing: -0.03em;
   /* Türkçede hem alt uzantı (ğ, ş, ç, y) hem aksanlı büyük harf (İ, Ş)
      çok sık geçiyor; 1.12'nin altında iki satır birbirine değiyor. */

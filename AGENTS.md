@@ -53,10 +53,16 @@ bunu her seferinde yeniden üretir. `src/styles/fonts.css`teki
 `unicode-range` değerleri betikteki `isCore()` bölmesiyle **birebir aynı**
 olmalı; çakışırlarsa son tanım kazanır ve diğer dosya hiç indirilmez.
 
-**Fraunces'ta yalnızca `opsz` ekseni var.** Fontsource'ta SOFT ve WONK
-eksenleri sadece `full` kesitinde ve dosyayı ikiye katlıyor. Bu yüzden
-`font-variation-settings` içinde SOFT/WONK **kullanılmaz** — yazılsa da
-sessizce yok sayılır.
+**Fraunces'ta `opsz` ve `wght` eksenleri var.** SOFT ve WONK yalnızca
+`full` kesitinde ve dosyayı ikiye katlıyor; bizim dosyada ikisi de 0'a
+sabit. Bu yüzden `font-variation-settings` içinde SOFT/WONK
+**kullanılmaz** — yazılsa da sessizce yok sayılır.
+
+**`opsz` elle yazılmaz.** `font-optical-sizing: auto` (varsayılan)
+ekseni punto ile birlikte gezdiriyor. Sabitlenirse 18 px'lik bir ad da
+144 punto için çizilmiş ince, gergin harflerle geliyor; Fraunces'ta bu
+en çok K'nın kolunda ve H'nin orta çizgisinde belli oluyor. Bir kez
+`"opsz" 144` yazıp bütün başlıkları böyle bozduk.
 
 **Yeni kart rengi ton açısıyla verilir.** `hue` değeri hem panelin
 vurgusunu hem yörünge düğümünü hem paylaşım kartındaki noktayı besliyor;
