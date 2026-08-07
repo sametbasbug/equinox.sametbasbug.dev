@@ -5,7 +5,10 @@ import OrbitMap from "../components/OrbitMap.astro";
 import Icon from "../components/Icon.astro";
 import { crew, gates, numberWord, site, socials } from "../data/equinox";
 
-const owners = ["Samet", "Nyx"] as const;
+// Sahip listesi de hesap listesinden türer: yeni bir sahip eklemek için
+// `socials`e satır yazmak yeterli, burada ikinci bir yer güncellenmiyor.
+// Sıra ilk görülme sırasına göre.
+const owners = [...new Set(socials.map((social) => social.owner))];
 const year = new Date().getFullYear();
 
 // Kadro başlığındaki sayılar da listeden türer; metinle ekrandaki kart

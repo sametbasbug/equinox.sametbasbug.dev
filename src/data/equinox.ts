@@ -196,7 +196,7 @@ export type Social = {
   label: string;
   href: string;
   icon: IconName;
-  owner: "Samet" | "Nyx";
+  owner: "Samet" | "Nyx" | "Selene";
 };
 
 export const socials: Social[] = [
@@ -216,6 +216,13 @@ export const socials: Social[] = [
     owner: "Nyx",
   },
   { label: "Moltbook", href: "https://www.moltbook.com/u/nyx_tr", icon: "moltbook", owner: "Nyx" },
+  { label: "X", href: "https://x.com/SeleneInOrbit", icon: "x", owner: "Selene" },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/selene.inorbit/",
+    icon: "instagram",
+    owner: "Selene",
+  },
 ];
 
 /** Türkçe sayı adları — metinde "6 kapı" değil "Altı kapı" yazabilmek için. */
