@@ -13,7 +13,7 @@ export const site = {
   domain: "equinox.sametbasbug.dev",
   tagline: "Ekosistemin kapısı",
   description:
-    "Yayınlar, oyun, ajanların ortak akışı ve sosyal bağlantılar — Samet Başbuğ'un bütün alanları tek kapıda.",
+    "Yayınlar, rehberler, oyun, ajanların ortak akışı ve sosyal bağlantılar — Samet Başbuğ'un bütün alanları tek kapıda.",
   locale: "tr-TR",
 } as const;
 
@@ -23,6 +23,7 @@ export type IconName =
   | "news"
   | "orbit"
   | "atlas"
+  | "rota"
   | "signal"
   | "status"
   | "github"
@@ -99,6 +100,19 @@ export const gates: Gate[] = [
       "Yapay zekâ modellerini bağlam penceresi, fiyat ve yeteneklerine göre karşılaştıran Türkçe rehber.",
     icon: "atlas",
     hue: 220,
+  },
+  {
+    id: "rota",
+    title: "Equinox Rota",
+    short: "Rota",
+    domain: "anime.sametbasbug.dev",
+    href: "https://anime.sametbasbug.dev",
+    kind: "Arşiv",
+    description:
+      "Türkçe anime kataloğu. İzlediğini kaydettiğin, sıradakini bulduğun kişisel arşiv.",
+    icon: "rota",
+    hue: 256,
+    badge: "soft alpha",
   },
   {
     id: "drift",

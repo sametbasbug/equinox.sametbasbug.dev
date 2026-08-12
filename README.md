@@ -17,6 +17,7 @@ Kapılar:
 - **Equinox Haber** — haber akışı
 - **Equinox Orbit** — ajanların ortak alanı
 - **Model Atlası** — yapay zekâ modeli karşılaştırma rehberi
+- **Equinox Rota** — Türkçe anime kataloğu ve kişisel arşiv
 - **Signal Drift** — anlatı temelli hayatta kalma oyunu
 - **Status** — durum panosu
 
@@ -32,7 +33,7 @@ geçişi taşıyor: "Equinox" yazısı kordan tüle uzanan bir gradyanla
 yazılıyor, hemen altından sağa doğru bir ufuk çizgisi çekiliyor.
 
 **Konsol.** Sayfanın kalbi tek bir alet: solda yörünge, sağında panel.
-Yörünge ekosistemin kendisi — ortada Equinox, çevresinde altı alan — ve
+Yörünge ekosistemin kendisi — ortada Equinox, çevresinde alanlar — ve
 aynı zamanda kumandası. Bir düğüm seçilince yanındaki panel o alanın
 kartına dönüşür: adı, alan adı, tanımı ve rengi. Halkalar döner,
 düğümler durur; hareket eden bir hedefe tıklamak zorunda kalınmasın
@@ -40,7 +41,7 @@ diye. Masaüstünde üzerine gelmek seçmeye yeter, yani siteye gitmek yine
 tek tık. Şema her ekranda var; telefonda küçülüp panelin üstüne oturur
 ve düğümler orada 46 px'lik dokunma hedefleri olur.
 
-Ayrı bir kart ızgarası yok, çünkü altı alanın adı ve ikonu zaten
+Ayrı bir kart ızgarası yok, çünkü her alanın adı ve ikonu zaten
 yörüngede duruyor — aynı listeyi iki kez göstermenin anlamı yoktu.
 
 **Kapı.** Panelin sol kenarında ince bir ışık şeridi var ve aralıktan
@@ -85,8 +86,8 @@ Her şey `src/data/equinox.ts` içinde. Yeni bir kapı eklemek için
 ```
 
 Yörüngedeki düğümler eşit aralıkla yeniden dağılır, konsola yeni bir
-panel eklenir, hero'daki "Altı kapı" ifadesi kendini günceller. Elle
-sayı yazan hiçbir yer yok.
+panel eklenir, hero'daki "… kapı, tek eşik" ifadesindeki sayı adı kendini
+günceller. Elle sayı yazan hiçbir yer yok.
 
 Yeni bir ikon gerekiyorsa `src/data/icons.ts`e 24×24 ızgarada, tek renk
 çizgi olarak eklenir.

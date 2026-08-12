@@ -24,6 +24,12 @@ export const icons: Record<IconName, Icon> = {
   atlas: {
     inner: `<path d="M4.4 4.4v15.2h15.2"/><path d="M8 19.6v-5.6M12 19.6V8.8M16 19.6v-8.2"/>`,
   },
+  /* Rota'nın kendi yüzü, 24 ızgarasına indirilmiş hâli: kulaklar, yüz ve
+     iki göz. Marka işaretindeki yanak, ağız ve yıldız bu boyutta lekeye
+     dönüştüğü için alınmadı. */
+  rota: {
+    inner: `<path d="M6.4 10.9 7.5 5.6l4.1 3.8h1.1l3.8-3.8 1.1 5.3"/><rect x="5.6" y="9.4" width="12.8" height="10.1" rx="5"/><path d="M9.8 13.1v1.6M14.2 13.1v1.6"/>`,
+  },
   // Yayılan sinyal — Signal Drift
   signal: {
     inner: `<circle cx="12" cy="12" r="2"/><path d="M8.4 8.4a5.1 5.1 0 0 0 0 7.2M15.6 15.6a5.1 5.1 0 0 0 0-7.2"/><path d="M5.6 5.6a9 9 0 0 0 0 12.8M18.4 18.4a9 9 0 0 0 0-12.8"/>`,

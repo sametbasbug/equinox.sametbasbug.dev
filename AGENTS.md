@@ -1,8 +1,8 @@
 # equinox.sametbasbug.dev
 
-Astro 7 + Tailwind 4 ile kurulmuş tek sayfalık kapı. Ekosistemdeki altı
-alanı, kadroyu ve sosyal hesapları listeler. Kullanıcıya dönük her metin
-Türkçedir.
+Astro 7 + Tailwind 4 ile kurulmuş tek sayfalık kapı. Ekosistemdeki
+alanları, kadroyu ve sosyal hesapları listeler. Kullanıcıya dönük her
+metin Türkçedir.
 
 ```bash
 npm run dev       # http://localhost:4321
@@ -21,9 +21,10 @@ dosya silinirse özel alan adı düşer.
 ## Değiştirirken dikkat
 
 **Bütün içerik `src/data/equinox.ts`te.** Kapı sayısı, kadro sayısı,
-yörüngedeki düğüm yerleşimi ve metindeki "Altı kapı" ifadesi hep oradan
-türer. Yeni bir alan eklenince yerleşim kendini kurar — sayıyı elle
-yazan hiçbir yer yok.
+yörüngedeki düğüm yerleşimi ve hero'daki "… kapı, tek eşik" ifadesindeki
+sayı adı hep oradan türer. Yeni bir alan eklenince yerleşim kendini kurar
+— sayıyı elle yazan hiçbir yer yok. Bu belgeye de yazma; sayıyı belgeye
+yazmak onu ilk eklemede eskitir.
 
 **Sayfanın kalbi konsol: şema seçer, panel gösterir.** Yörüngedeki
 düğümler bağlantı değil sekme (`role="tab"`), paneller `role="tabpanel"`;
@@ -32,13 +33,13 @@ değerini taşıyan üç öğe — düğüm, çekirdekten çıkan SVG kolu ve pa
 birlikte `is-current` alır (`src/pages/index.astro` sonundaki betik).
 Yeni bir işaretli öğe eklerken aynı değeri vermek yeterli.
 
-**Altı panelin altısı da HTML'de.** Aynı ızgara gözünde üst üste
-duruyorlar; yükseklik en uzun panele göre sabit, geçişte sayfa
-zıplamıyor. Seçili olmayanlar `visibility: hidden` — yalnızca `opacity`
-kullanılsaydı klavye görünmeyen panelin içindeki bağlantıya girmeye
-devam ederdi. Bağlantılar DOM'da durduğu için tarayıcı da arama motoru
-da altısını görüyor. JavaScript yoksa `<noscript>` bloğu altı paneli
-birden açıp düğümleri gizliyor.
+**Panellerin hepsi HTML'de.** Aynı ızgara gözünde üst üste duruyorlar;
+yükseklik en uzun panele göre sabit, geçişte sayfa zıplamıyor. Seçili
+olmayanlar `visibility: hidden` — yalnızca `opacity` kullanılsaydı klavye
+görünmeyen panelin içindeki bağlantıya girmeye devam ederdi. Bağlantılar
+DOM'da durduğu için tarayıcı da arama motoru da hepsini görüyor.
+JavaScript yoksa `<noscript>` bloğu panellerin tamamını birden açıp
+düğümleri gizliyor.
 
 **Masaüstünde üzerine gelmek seçiyor.** Böylece siteye gitmek yine tek
 tık. Dokunmatikte yalnızca tıklama var: `pointerenter` dokunuşla geliyor
@@ -100,7 +101,7 @@ yazma.
 | `src/data/equinox.ts` | Site kimliği, kapılar, kadro, sosyal hesaplar — tek kaynak |
 | `src/data/icons.ts` | 24×24 ikon yolları |
 | `src/components/OrbitMap.astro` | Konsolun seçicisi; düğümler HTML sekme, halkalar SVG |
-| `src/components/GatePanel.astro` | Seçili alanın paneli; üst üste duran altı panelden biri |
+| `src/components/GatePanel.astro` | Seçili alanın paneli; üst üste duran panellerden biri |
 | `src/styles/global.css` | Tasarım sistemi (ana blogla aynı token seti) |
 | `src/styles/fonts.css` | Budanmış kesitlerin @font-face tanımları |
 | `scripts/` | Font, ikon ve paylaşım kartı üreticileri |
