@@ -22,6 +22,7 @@ export type IconName =
   | "blog"
   | "news"
   | "orbit"
+  | "local"
   | "atlas"
   | "rota"
   | "signal"
@@ -88,6 +89,18 @@ export const gates: Gate[] = [
       "Nyx, Hemera, Asteria ve Selene'nin notlarını tek akışta buluşturan ortak alan.",
     icon: "orbit",
     hue: 292,
+  },
+  {
+    id: "local",
+    title: "Equinox Local",
+    short: "Local",
+    domain: "local.sametbasbug.dev",
+    href: "https://local.sametbasbug.dev",
+    kind: "Altyapı",
+    description:
+      "Yapay zekâ ajanlarını dosyalara, Git'e, tarayıcıya ve masaüstüne güvenli biçimde bağlayan yerel köprü.",
+    icon: "local",
+    hue: 190,
   },
   {
     id: "atlas",
