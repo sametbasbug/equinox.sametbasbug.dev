@@ -20,6 +20,10 @@ export const icons: Record<IconName, Icon> = {
   orbit: {
     inner: `<circle cx="12" cy="12" r="3.6"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(-22 12 12)"/>`,
   },
+  // Yerel makine + bağlantı — Equinox Local
+  local: {
+    inner: `<rect x="3.5" y="4.5" width="17" height="11" rx="2"/><path d="M8.5 19.5h7M12 15.5v4"/><path d="m8 10 2-2 2 2 2-2 2 2"/>`,
+  },
   // Karşılaştırma eksenleri — Model Atlası
   atlas: {
     inner: `<path d="M4.4 4.4v15.2h15.2"/><path d="M8 19.6v-5.6M12 19.6V8.8M16 19.6v-8.2"/>`,
