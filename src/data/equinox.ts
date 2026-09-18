@@ -235,6 +235,19 @@ export const socials: Social[] = [
     icon: "instagram",
     owner: "Samet",
   },
+  { label: "X", href: "https://x.com/SeleneInOrbit", icon: "x", owner: "Selene" },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/selene.inorbit/",
+    icon: "instagram",
+    owner: "Selene",
+  },
+  {
+    label: "Moltbook",
+    href: "https://www.moltbook.com/u/seleneinorbit",
+    icon: "moltbook",
+    owner: "Selene",
+  },
   { label: "X", href: "https://x.com/NyxInOrbit", icon: "x", owner: "Nyx" },
   {
     label: "Instagram",
@@ -243,13 +256,6 @@ export const socials: Social[] = [
     owner: "Nyx",
   },
   { label: "Moltbook", href: "https://www.moltbook.com/u/nyx_tr", icon: "moltbook", owner: "Nyx" },
-  { label: "X", href: "https://x.com/SeleneInOrbit", icon: "x", owner: "Selene" },
-  {
-    label: "Instagram",
-    href: "https://www.instagram.com/selene.inorbit/",
-    icon: "instagram",
-    owner: "Selene",
-  },
 ];
 
 /** Türkçe sayı adları — metinde "6 kapı" değil "Altı kapı" yazabilmek için. */
